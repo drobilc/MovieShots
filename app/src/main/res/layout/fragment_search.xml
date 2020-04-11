@@ -18,7 +18,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp"
-        android:background="@drawable/main_activity_background">
+        android:background="@drawable/main_activity_background"
+        android:focusableInTouchMode="true" >
 
         <TextView
             android:id="@+id/movie_intro"
