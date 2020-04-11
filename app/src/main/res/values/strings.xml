@@ -1,0 +1,67 @@
+<resources>
+    <string name="app_name">MovieDrinkers</string>
+
+    <string name="movie_selection_title">Which <b><font color="#ff6363">movie</font></b> are you watching?</string>
+    <string name="movie_selection_hint">The Godfather</string>
+
+    <string name="intoxication_level_title">Intoxication</string>
+    <string name="intoxication_level_default_value">Chatty</string>
+    <plurals name="intoxication_level_shots">
+        <item quantity="one">(%d shot)</item>
+        <item quantity="other">(%d shots)</item>
+    </plurals>
+    <string name="intoxication_chatty">Chatty</string>
+    <string name="intoxication_tipsy">Tipsy</string>
+    <string name="intoxication_friendly">Friendly</string>
+    <string name="intoxication_very_drunk">Very drunk</string>
+    <string name="intoxication_wasted">Wasted</string>
+
+    <string name="players_title">Players</string>
+    <string name="players_default_value">Just me</string>
+    <plurals name="people_number">
+        <item quantity="one">(%d person)</item>
+        <item quantity="other">(%d people)</item>
+    </plurals>
+    <plurals name="players_number">
+        <item quantity="one">%d player</item>
+        <item quantity="other">%d players</item>
+    </plurals>
+    <string name="players_just_me">Just me</string>
+    <string name="players_a_few">A few</string>
+    <string name="players_quite_a_lot">Quite a lot</string>
+    <string name="players_party">Party</string>
+    <string name="players_a_shitload">A shitload</string>
+
+    <string name="generate_game_button">Let\'s drink!</string>
+
+    <string name="player_number">Player %d</string>
+
+    <string-array name="loading_messages">
+        <item>Finding ice cubes</item>
+        <item>Pouring whiskey</item>
+        <item>Setting the mood</item>
+        <item>Turning off the lights</item>
+        <item>Playing movie</item>
+        <item>Mixing cocktails</item>
+        <item>Getting the party started</item>
+    </string-array>
+
+    <string name="exception_title">Oopsie</string>
+    <string name="exception_default_message">Something went wrong</string>
+    <string name="exception_hint">Please stay calm and try again.</string>
+    <string name="try_again_button">Try again</string>
+
+    <string name="exception_no_connection">You are not connected to the internet. Please connect to wifi or mobile data and try again.</string>
+    <string name="exception_network">There is a problem with your network.</string>
+    <string name="exception_parse">Server is sending gibberish.</string>
+    <string name="exception_server">Server could not process your request.</string>
+    <string name="exception_timeout">The server did not respond in time.</string>
+    <string name="exception_authentication">There was a problem with authentication with the server.</string>
+
+    <string name="movie_title">Movie Title</string>
+    <string name="rules_title">The rules</string>
+    <string name="the">the</string>
+    <string name="rules_text">Each player should choose their colour and drink every time their word appears in the movie.</string>
+
+
+</resources>

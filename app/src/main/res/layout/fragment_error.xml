@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ErrorFragment">
+
+    <LinearLayout
+        android:id="@+id/exception"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="70dp"
+        android:background="@drawable/game_element_background">
+
+        <TextView
+            android:id="@+id/exception_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxWidth="300dp"
+            android:text="@string/exception_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="28sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/exception_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxWidth="300dp"
+            android:text="@string/exception_default_message"
+            android:textSize="20sp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/exception_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxWidth="300dp"
+            android:text="@string/exception_hint"
+            android:textSize="14sp"
+            android:fontFamily="@font/open_sans_light"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/colorSecondaryText"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/exception" />
+
+    <Button
+        android:id="@+id/try_again_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spacer"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/open_sans_semibold"
+        android:paddingStart="48dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="48dp"
+        android:paddingBottom="20dp"
+        android:text="@string/try_again_button"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

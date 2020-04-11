@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="60dp"
+        android:paddingTop="50dp"
+        android:paddingRight="60dp"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp"
+        android:background="@drawable/main_activity_background">
+
+        <TextView
+            android:id="@+id/movie_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans"
+            android:paddingEnd="40dp"
+            android:text="@string/movie_selection_title"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/movie_title_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:fontFamily="@font/open_sans_semibold"
+            android:hint="@string/movie_selection_hint"
+            android:textSize="22sp"
+            android:layout_marginTop="16dp"
+            android:drawableStart="@drawable/ic_movie_black_24dp"
+            android:drawablePadding="18dp"
+            android:drawableTint="@color/colorText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_intro" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text="@string/intoxication_level_title"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_title_input" />
+
+        <TextView
+            android:id="@+id/intoxication_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/intoxication_level_default_value"
+            android:textColor="#ff6363"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <com.jem.rubberpicker.RubberSeekBar
+            android:focusableInTouchMode="true"
+            android:id="@+id/intoxication_level_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:defaultThumbInsideColor="#ff6363"
+            app:defaultThumbRadius="12dp"
+            app:highlightDefaultThumbOnTouchColor="#ff6363"
+            app:highlightTrackColor="#ff6363"
+            app:initialValue="2"
+            app:layout_constraintTop_toBottomOf="@+id/intoxication_level"
+            app:maxValue="20"
+            app:minValue="2"
+            tools:layout_editor_absoluteX="16dp" />
+
+        <TextView
+            android:id="@+id/number_of_shots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text=""
+            android:textColor="#888888"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/intoxication_level"
+            app:layout_constraintStart_toEndOf="@+id/intoxication_level"
+            app:layout_constraintTop_toTopOf="@+id/intoxication_level"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <TextView
+            android:id="@+id/number_of_players_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text="@string/players_title"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/intoxication_level_picker" />
+
+        <TextView
+            android:id="@+id/number_of_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="@string/players_default_value"
+            android:textColor="#ff6363"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/number_of_players_text" />
+
+        <com.jem.rubberpicker.RubberSeekBar
+            android:focusableInTouchMode="true"
+            android:id="@+id/number_of_players_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:defaultThumbInsideColor="#ff6363"
+            app:defaultThumbRadius="12dp"
+            app:highlightDefaultThumbOnTouchColor="#ff6363"
+            app:highlightTrackColor="#ff6363"
+            app:initialValue="1"
+            app:layout_constraintTop_toBottomOf="@+id/number_of_players"
+            app:maxValue="16"
+            app:minValue="1" />
+
+        <TextView
+            android:id="@+id/number_of_players_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text=""
+            android:textColor="#888888"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/number_of_players"
+            app:layout_constraintStart_toEndOf="@+id/number_of_players"
+            app:layout_constraintTop_toTopOf="@+id/number_of_players"
+            app:layout_constraintVertical_bias="0.75" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/constraintLayout" />
+
+    <Button
+        android:id="@+id/generate_game_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spacer"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/open_sans_semibold"
+        android:paddingStart="48dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="48dp"
+        android:paddingBottom="20dp"
+        android:text="@string/generate_game_button"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

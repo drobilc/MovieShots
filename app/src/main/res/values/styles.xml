@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--<item name="colorPrimaryDark">#ffffff</item>-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="LabelStyle" parent="AppTheme">
+        <item name="android:fontFamily">@font/open_sans_light</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LighterLabelStyle" parent="LabelStyle">
+        <item name="android:textColor">@color/colorSecondaryText</item>
+    </style>
+
+    <style name="ImportantTextStyle">
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="ColoredImportantTextStyle" parent="ImportantTextStyle">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+</resources>
