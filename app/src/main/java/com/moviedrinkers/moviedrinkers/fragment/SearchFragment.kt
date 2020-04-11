@@ -1,11 +1,12 @@
 package com.moviedrinkers.moviedrinkers.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.jem.rubberpicker.RubberSeekBar
 import com.moviedrinkers.moviedrinkers.R
@@ -114,6 +115,16 @@ class SearchFragment : Fragment() {
         // Autocomplete from the server
         val adapter = MovieSuggestionsAdapter(context!!)
         view.movie_title_input.setAdapter(adapter)
+        view.movie_title_input.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, view, position, id->
+
+            // Hide the keyboard because user has selected an item
+            val viewInFocus = activity?.currentFocus
+            viewInFocus?.let { v ->
+                val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
+            }
+        }
 
         return view
     }
