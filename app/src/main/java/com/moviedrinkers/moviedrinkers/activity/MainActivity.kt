@@ -58,9 +58,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
     private fun generateGame(movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
         displayGameFragment.displayLoadingScreen(true)
 
-        val queue = VolleySingleton.getInstance(
-            this.applicationContext
-        ).requestQueue
+        val queue = VolleySingleton.getInstance(this.applicationContext).requestQueue
 
         val url = "http://alcohol.stvari.si/game?movie=$movieTitle&intoxication=$numberOfShots&players=$numberOfPlayers"
         val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
@@ -115,6 +113,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
                 }
             displayExceptionFragment(exception)
         })
+        jsonRequest.tag = VolleySingleton.GAME_GENERATION_TAG
         jsonRequest.retryPolicy = DefaultRetryPolicy(20000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
 
         queue.add(jsonRequest)

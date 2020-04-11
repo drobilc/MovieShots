@@ -62,6 +62,7 @@
     <string name="rules_title">The rules</string>
     <string name="the">the</string>
     <string name="rules_text">Each player should choose their colour and drink every time their word appears in the movie.</string>
+    <string name="movie_suggestion_default">Harry Potter and the Prisoner of Azkaban</string>
 
 
 </resources>

@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import com.jem.rubberpicker.RubberSeekBar
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.adapter.MovieSuggestionsAdapter
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
@@ -57,11 +60,11 @@ class SearchFragment : Fragment() {
     }
 
     fun refreshSliders() {
-        val numberOfShotsText = resources.getQuantityString(R.plurals.intoxication_level_shots, currentIntoxicationLevel, currentIntoxicationLevel);
+        val numberOfShotsText = resources.getQuantityString(R.plurals.intoxication_level_shots, currentIntoxicationLevel, currentIntoxicationLevel)
         intoxication_level?.text = getIntoxicationLevelText(currentIntoxicationLevel)
         number_of_shots?.text = numberOfShotsText
 
-        val numberOfPlayersText = resources.getQuantityString(R.plurals.people_number, currentNumberOfPlayers, currentNumberOfPlayers);
+        val numberOfPlayersText = resources.getQuantityString(R.plurals.people_number, currentNumberOfPlayers, currentNumberOfPlayers)
         number_of_players?.text = getNumberOfPlayersText(currentNumberOfPlayers)
         number_of_players_number?.text = numberOfPlayersText
     }
@@ -108,8 +111,9 @@ class SearchFragment : Fragment() {
             this.callback.onGameSearched(movieTitle, numberOfShots, numberOfPlayers)
         }
 
-        // AUTOCOMPLETE FROM SERVER
-        view.movie_title_input
+        // Autocomplete from the server
+        val adapter = MovieSuggestionsAdapter(context!!)
+        view.movie_title_input.setAdapter(adapter)
 
         return view
     }
