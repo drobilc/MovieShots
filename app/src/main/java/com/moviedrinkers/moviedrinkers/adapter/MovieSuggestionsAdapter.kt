@@ -11,20 +11,21 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.list_item_suggestion.view.*
 
 
 class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Filterable {
 
-    private val suggestions: ArrayList<String> = arrayListOf()
+    private val suggestions: ArrayList<Movie> = arrayListOf()
     private val filter: CustomFilter = CustomFilter()
 
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val view = inflater.inflate(R.layout.list_item_suggestion, parent, false)
-        view.movie_title.text = this.suggestions[position]
+        view.movie_title.text = this.suggestions[position].title
         return view
     }
 
@@ -67,12 +68,12 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
             val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
                 Response.Listener {
                     // The server returned movie suggestions, display them
-                    val newSuggestions = arrayListOf<String>()
+                    val newSuggestions = arrayListOf<Movie>()
 
-                    val suggestionsArray = it.getJSONArray(1)
-                    for (i in 0 until suggestionsArray.length()) {
-                        val suggestion = suggestionsArray.getString(i)
-                        newSuggestions.add(suggestion)
+                    for (i in 0 until it.length()) {
+                        val suggestion = it.getJSONObject(i)
+                        val movie = Movie.fromJson(suggestion)
+                        newSuggestions.add(movie)
                     }
 
                     suggestions.clear()
