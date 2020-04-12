@@ -30,7 +30,7 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
     }
 
     override fun getItem(position: Int): Any {
-        return this.suggestions[position]
+        return this.suggestions[position].title
     }
 
     override fun getItemId(position: Int): Long {
@@ -48,11 +48,9 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
     inner class CustomFilter: Filter() {
 
         override fun performFiltering(constraint: CharSequence?): FilterResults {
-            val results = FilterResults()
-
             // If user has not typed enough characters, return an empty filter results
             if (constraint == null)
-                return results
+                return FilterResults()
 
             val keywords = constraint.toString()
 
@@ -86,12 +84,7 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
             jsonRequest.tag = VolleySingleton.MOVIE_SUGGESTIONS_TAG
             queue.add(jsonRequest)
 
-
-            val suggestions = arrayListOf<String>("Harry Potter 1", "Harry Potter 2")
-            results.count = suggestions.size
-            results.values = suggestions
-
-            return results
+            return FilterResults()
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
