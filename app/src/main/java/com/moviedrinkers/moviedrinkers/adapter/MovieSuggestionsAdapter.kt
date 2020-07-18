@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
-import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.toolbox.JsonArrayRequest
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.list_item_suggestion.view.*
@@ -24,9 +23,9 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
     private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view = inflater.inflate(R.layout.list_item_suggestion, parent, false)
-        view.movie_title.text = this.suggestions[position].title
-        return view
+        val newView = convertView ?: inflater.inflate(R.layout.list_item_suggestion, parent, false)
+        newView.movie_title.text = this.suggestions[position].title
+        return newView
     }
 
     override fun getItem(position: Int): Any {
@@ -62,26 +61,22 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
                 it.tag == VolleySingleton.MOVIE_SUGGESTIONS_TAG
             }
 
-            val url = "http://alcohol.stvari.si/suggestions?keywords=$keywords"
-            val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null,
-                Response.Listener {
-                    // The server returned movie suggestions, display them
-                    val newSuggestions = arrayListOf<Movie>()
+            val jsonRequest = Api.getSuggestions(keywords, Response.Listener {
+                // The server returned movie suggestions, display them
+                val newSuggestions = arrayListOf<Movie>()
 
-                    for (i in 0 until it.length()) {
-                        val suggestion = it.getJSONObject(i)
-                        val movie = Movie.fromJson(suggestion)
-                        newSuggestions.add(movie)
-                    }
-
-                    suggestions.clear()
-                    suggestions.addAll(newSuggestions)
-                    notifyDataSetChanged()
-                }, Response.ErrorListener {
-                    // There was an error, ignore it
+                for (i in 0 until it.length()) {
+                    val suggestion = it.getJSONObject(i)
+                    val movie = Movie.fromJson(suggestion)
+                    newSuggestions.add(movie)
                 }
-            )
-            jsonRequest.tag = VolleySingleton.MOVIE_SUGGESTIONS_TAG
+
+                suggestions.clear()
+                suggestions.addAll(newSuggestions)
+                notifyDataSetChanged()
+            }, Response.ErrorListener {
+                // There was an error, ignore it
+            })
             queue.add(jsonRequest)
 
             return FilterResults()

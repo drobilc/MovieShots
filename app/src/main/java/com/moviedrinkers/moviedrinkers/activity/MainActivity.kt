@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.android.volley.*
-import com.android.volley.toolbox.JsonObjectRequest
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
@@ -60,8 +60,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
         val queue = VolleySingleton.getInstance(this.applicationContext).requestQueue
 
-        val url = "http://alcohol.stvari.si/game?movie=$movieTitle&intoxication=$numberOfShots&players=$numberOfPlayers"
-        val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, Response.Listener {
+        val jsonRequest = Api.generateGame(movieTitle, numberOfShots, numberOfPlayers, Response.Listener {
             if (it.has("error")) {
                 val exception =
                     ApiException.fromJson(
@@ -113,9 +112,6 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
                 }
             displayExceptionFragment(exception)
         })
-        jsonRequest.tag = VolleySingleton.GAME_GENERATION_TAG
-        jsonRequest.retryPolicy = DefaultRetryPolicy(20000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
-
         queue.add(jsonRequest)
     }
 
