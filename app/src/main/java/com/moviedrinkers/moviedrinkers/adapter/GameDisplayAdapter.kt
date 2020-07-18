@@ -13,21 +13,23 @@ import kotlinx.android.synthetic.main.list_item_game_intro.view.*
 
 class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TYPE_INTRO = 1
-    private val TYPE_CUE = 2
+    companion object {
+        private const val TYPE_INTRO = 1
+        private const val TYPE_CUE = 2
+    }
 
     class CueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val words = view.words
-        val player = view.player
-        val intoxiction = view.intoxication
-        val colorStrip = view.color_strip
+        private val words = view.words
+        private val player = view.player
+        private val intoxication = view.intoxication
+        private val colorStrip = view.color_strip
 
         fun bind(drinkingGamePlayer: DrinkingGamePlayer, position: Int, itemCount: Int) {
             words.text = drinkingGamePlayer.getWords()
             player.text = itemView.context.getString(R.string.player_number, position + 1)
 
             val occurrences = drinkingGamePlayer.getTotalOccurrences()
-            intoxiction.text = itemView.context.resources.getQuantityString(R.plurals.intoxication_level_shots, occurrences, occurrences)
+            intoxication.text = itemView.context.resources.getQuantityString(R.plurals.intoxication_level_shots, occurrences, occurrences)
 
             val hue = position * (360.0f / itemCount)
             val stripColor = Color.HSVToColor(floatArrayOf(hue, 0.6f, 1.0f))
@@ -36,9 +38,9 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
     }
 
     class IntroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title = view.drinking_game_title_text
-        val numberOfPlayers = view.game_players
-        val duration = view.movie_duration
+        private val title = view.drinking_game_title_text
+        private val numberOfPlayers = view.game_players
+        private val duration = view.movie_duration
 
         fun bind(game: DrinkingGame) {
             title.text = game.movie.title
@@ -82,7 +84,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
 
     override fun getItemViewType(position: Int): Int {
         if (position == 0)
-            return this.TYPE_INTRO
-        return this.TYPE_CUE
+            return TYPE_INTRO
+        return TYPE_CUE
     }
 }

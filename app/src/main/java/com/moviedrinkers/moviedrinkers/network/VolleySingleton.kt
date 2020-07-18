@@ -11,8 +11,8 @@ class VolleySingleton constructor(context: Context) {
     companion object {
 
         // Tags that we can use to identify requests
-        val MOVIE_SUGGESTIONS_TAG: String = "MOVIE_SUGGESTIONS"
-        val GAME_GENERATION_TAG: String = "GAME_GENERATION"
+        const val MOVIE_SUGGESTIONS_TAG: String = "MOVIE_SUGGESTIONS"
+        const val GAME_GENERATION_TAG: String = "GAME_GENERATION"
 
         @Volatile
         private var INSTANCE: VolleySingleton? = null
@@ -30,10 +30,6 @@ class VolleySingleton constructor(context: Context) {
 
     val requestQueue: RequestQueue by lazy {
         Volley.newRequestQueue(context.applicationContext)
-    }
-
-    fun <T> addToRequestQueue(req: Request<T>) {
-        requestQueue.add(req)
     }
 
 }

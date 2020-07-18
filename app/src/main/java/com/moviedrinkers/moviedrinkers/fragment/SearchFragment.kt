@@ -21,7 +21,7 @@ class SearchFragment : Fragment() {
         fun onRetry()
     }
 
-    internal lateinit var callback: OnSearch
+    private lateinit var callback: OnSearch
 
     fun setOnSearchListener(callback: OnSearch) {
         this.callback = callback
@@ -36,7 +36,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    fun getIntoxicationLevelText(value: Int): String {
+    private fun getIntoxicationLevelText(value: Int): String {
         if (value <= 3)
             return getString(R.string.intoxication_chatty)
         else if (value <= 5)
@@ -48,7 +48,7 @@ class SearchFragment : Fragment() {
         return getString(R.string.intoxication_wasted)
     }
 
-    fun getNumberOfPlayersText(value: Int): String {
+    private fun getNumberOfPlayersText(value: Int): String {
         if (value <= 1)
             return getString(R.string.players_just_me)
         if (value <= 3)
@@ -122,7 +122,7 @@ class SearchFragment : Fragment() {
             val viewInFocus = activity?.currentFocus
             viewInFocus?.let { v ->
                 val inputMethodManager = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager?.hideSoftInputFromWindow(v.windowToken, 0)
+                inputMethodManager.hideSoftInputFromWindow(v.windowToken, 0)
             }
         }
 

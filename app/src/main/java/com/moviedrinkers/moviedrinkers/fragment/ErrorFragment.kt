@@ -13,7 +13,7 @@ class ErrorFragment : Fragment() {
 
     private var exception: ApiException? = null
 
-    internal lateinit var callback: SearchFragment.OnSearch
+    private lateinit var callback: SearchFragment.OnSearch
     fun setOnRetryListener(callback: SearchFragment.OnSearch) {
         this.callback = callback
     }

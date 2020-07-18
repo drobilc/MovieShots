@@ -13,10 +13,10 @@ data class DrinkingGamePlayer(
     }
 
     fun getTotalOccurrences(): Int {
-        var totalOccurrences = 0;
+        var totalOccurrences = 0
         for (drinkingCue in drinkingCues)
             totalOccurrences += drinkingCue.occurrences
-        return totalOccurrences;
+        return totalOccurrences
     }
 
     companion object {
