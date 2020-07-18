@@ -24,8 +24,4 @@
         <item name="android:textSize">26sp</item>
     </style>
 
-    <style name="ColoredImportantTextStyle" parent="ImportantTextStyle">
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
 </resources>
