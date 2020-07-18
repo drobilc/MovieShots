@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieDrinkers</string>
+    <string name="app_name">MovieShots</string>
 
     <string name="movie_selection_title">Which <b><font color="#ff6363">movie</font></b> are you watching?</string>
     <string name="movie_selection_hint">The Godfather</string>
