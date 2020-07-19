@@ -4,15 +4,20 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.DrinkingCue
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.DrinkingGamePlayer
+import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.list_item_bonus_word.view.*
 import kotlinx.android.synthetic.main.list_item_game_display.view.*
 import kotlinx.android.synthetic.main.list_item_game_display.view.words
 import kotlinx.android.synthetic.main.list_item_game_intro.view.*
+import kotlinx.android.synthetic.main.list_item_game_rating.view.*
 
 abstract class Item
 class Intro: Item()
@@ -99,8 +104,19 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
         fun bind() {}
     }
 
-    class GameRatingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bind() {}
+    class GameRatingViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        private val ratingBar = view.game_rating
+        private val thanksText = view.rating_thanks
+        fun bind(game: DrinkingGame) {
+            ratingBar.setOnRatingBarChangeListener { _, rating: Float, _ ->
+                // The rating has changed, send data to api
+                val queue = VolleySingleton.getInstance(view.context.applicationContext).requestQueue
+                val jsonRequest = Api.rateGame(game.id, rating, Response.Listener {
+                    thanksText.visibility = View.VISIBLE
+                })
+                queue.add(jsonRequest)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -125,6 +141,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             TYPE_BONUS_WORDS_INTRO -> (holder as BonusIntroViewHolder).bind(this.game)
             TYPE_BONUS_WORD -> (holder as BonusCueViewHolder).bind((item as BonusCue), game.bonusWords.size)
             TYPE_SPACER -> (holder as SpacerViewHolder).bind()
+            TYPE_RATE_GAME -> (holder as GameRatingViewHolder).bind(game)
         }
     }
 

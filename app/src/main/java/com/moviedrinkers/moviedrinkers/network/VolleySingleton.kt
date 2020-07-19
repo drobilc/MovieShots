@@ -13,6 +13,7 @@ class VolleySingleton constructor(context: Context) {
         // Tags that we can use to identify requests
         const val MOVIE_SUGGESTIONS_TAG: String = "MOVIE_SUGGESTIONS"
         const val GAME_GENERATION_TAG: String = "GAME_GENERATION"
+        const val GAME_RATING_TAG: String = "GAME_RATING"
 
         @Volatile
         private var INSTANCE: VolleySingleton? = null

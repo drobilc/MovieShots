@@ -16,6 +16,7 @@ class Api {
 
         private const val MAIN_URL = "http://stvari.si:4567"
         private const val GENERATE_GAME_URL = "$MAIN_URL/game"
+        private const val RATE_GAME_URL = "$GENERATE_GAME_URL/rate"
         private const val SUGGESTIONS_URL = "$MAIN_URL/suggestions"
 
         private fun getGenerateGameUrl(
@@ -23,19 +24,27 @@ class Api {
             intoxication: Int,
             players: Int
         ): String {
-            val generateGameUrl = Uri.parse(GENERATE_GAME_URL).buildUpon()
+            val generatedGameUrl = Uri.parse(GENERATE_GAME_URL).buildUpon()
                 .appendQueryParameter("movie", movieTitle)
                 .appendQueryParameter("intoxication", intoxication.toString())
                 .appendQueryParameter("players", players.toString())
                 .build()
-            return generateGameUrl.toString()
+            return generatedGameUrl.toString()
+        }
+
+        private fun getRateGameUrl(gameId: String, rating: Float): String {
+            val generatedRatingUrl = Uri.parse(RATE_GAME_URL).buildUpon()
+                .appendQueryParameter("game", gameId)
+                .appendQueryParameter("rating", rating.toString())
+                .build()
+            return generatedRatingUrl.toString()
         }
 
         private fun getSuggestionsUrl(keywords: String): String {
-            val generateGameUrl = Uri.parse(SUGGESTIONS_URL).buildUpon()
+            val generatedSuggestionsUrl = Uri.parse(SUGGESTIONS_URL).buildUpon()
                 .appendQueryParameter("keywords", keywords)
                 .build()
-            return generateGameUrl.toString()
+            return generatedSuggestionsUrl.toString()
         }
 
         fun generateGame(
@@ -63,6 +72,15 @@ class Api {
             val jsonRequest =
                 JsonArrayRequest(Request.Method.GET, url, null, listener, errorListener)
             jsonRequest.tag = VolleySingleton.MOVIE_SUGGESTIONS_TAG
+            return jsonRequest
+        }
+
+        fun rateGame(gameId: String, rating: Float, listener: Response.Listener<JSONObject>): JsonObjectRequest {
+            val url = this.getRateGameUrl(gameId, rating)
+            val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, listener, Response.ErrorListener {
+                // There was an error, do nothing
+            })
+            jsonRequest.tag = VolleySingleton.GAME_RATING_TAG
             return jsonRequest
         }
     }

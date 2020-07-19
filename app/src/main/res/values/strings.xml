@@ -68,6 +68,7 @@
     <string name="rating_text">Did you like this game? Help other movie watchers by rating it.</string>
     <string name="rating_title">How hot was this game?</string>
     <string name="movie_suggestion_year_default">2002</string>
+    <string name="rating_thanks_text">Thank you for rating this game! You rock!</string>
 
 
 </resources>

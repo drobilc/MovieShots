@@ -11,7 +11,7 @@
     android:background="@android:color/white">
 
     <TextView
-        android:id="@+id/drinking_game_subtitle_text"
+        android:id="@+id/drinking_game_rating_title"
         style="@style/ImportantTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,11 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="32dp"
         android:text="@string/rating_text" />
 
     <RatingBar
-        android:id="@+id/ratingBar"
+        android:id="@+id/game_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleX="1.4"
@@ -42,6 +41,17 @@
         android:max="5"
         android:rating="4"
         android:progressDrawable="@drawable/flame_rating_bar"
-        android:stepSize="0.5" />
+        android:stepSize="0.5"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/rating_thanks"
+        style="@style/LabelStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:text="@string/rating_thanks_text" />
 
 </LinearLayout>
