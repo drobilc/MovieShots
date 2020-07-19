@@ -13,7 +13,7 @@ import org.json.JSONObject
 class Api(private val applicationKey: String) {
 
     companion object {
-        private const val MAIN_URL = "http://stvari.si:4567"
+        private const val MAIN_URL = "https://movieshots.mladibori.si"
         private const val GENERATE_GAME_URL = "$MAIN_URL/game"
         private const val RATE_GAME_URL = "$GENERATE_GAME_URL/rate"
         private const val SUGGESTIONS_URL = "$MAIN_URL/suggestions"
