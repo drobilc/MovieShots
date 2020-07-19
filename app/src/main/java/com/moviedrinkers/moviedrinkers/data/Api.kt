@@ -78,11 +78,9 @@ class Api(private val applicationKey: String) {
         return jsonRequest
     }
 
-    fun rateGame(gameId: String, rating: Float, listener: Response.Listener<JSONObject>): JsonObjectRequest {
+    fun rateGame(gameId: String, rating: Float, listener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener): JsonObjectRequest {
         val url = this.getRateGameUrl(gameId, rating)
-        val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, listener, Response.ErrorListener {
-            // There was an error, do nothing
-        })
+        val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener)
         jsonRequest.tag = VolleySingleton.GAME_RATING_TAG
         return jsonRequest
     }

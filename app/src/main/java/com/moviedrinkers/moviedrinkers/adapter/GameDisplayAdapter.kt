@@ -105,16 +105,30 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
     class GameRatingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         private val ratingBar = view.game_rating
         private val thanksText = view.rating_thanks
+        private val savingIndicator = view.saving
+
         fun bind(game: DrinkingGame) {
+
+            thanksText.visibility = View.INVISIBLE
+            savingIndicator.visibility = View.INVISIBLE
+
             ratingBar.setOnRatingBarChangeListener { _, rating: Float, _ ->
                 // The rating has changed, send data to api
+                savingIndicator.visibility = View.VISIBLE
+                savingIndicator.text = view.context.getString(R.string.rating_saving)
+
                 val queue = VolleySingleton.getInstance(view.context.applicationContext).requestQueue
                 val api = (view.context.applicationContext as MovieShotsApplication).getApi()
+
                 val jsonRequest = api.rateGame(game.id, rating, Response.Listener {
+                    savingIndicator.text = view.context.getString(R.string.rating_saved)
                     thanksText.visibility = View.VISIBLE
+                }, Response.ErrorListener {
+                    savingIndicator.text = view.context.getString(R.string.rating_error)
                 })
                 queue.add(jsonRequest)
             }
+
         }
     }
 

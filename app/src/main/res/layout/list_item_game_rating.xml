@@ -28,30 +28,58 @@
         android:layout_marginTop="10dp"
         android:text="@string/rating_text" />
 
-    <RatingBar
-        android:id="@+id/game_rating"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="1.4"
-        android:scaleY="1.4"
-        android:layout_gravity="center_horizontal"
-        android:maxHeight="33dip"
-        android:minHeight="31dip"
-        android:numStars="5"
-        android:max="5"
-        android:rating="4"
-        android:progressDrawable="@drawable/flame_rating_bar"
-        android:stepSize="0.5"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="32dp"/>
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
 
-    <TextView
+        <RatingBar
+            android:id="@+id/game_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:maxHeight="47dip"
+            android:minHeight="48dip"
+            android:numStars="5"
+            android:max="5"
+            android:rating="4"
+            android:stepSize="0.1"
+            android:progressDrawable="@drawable/flame_rating_bar"
+            android:layout_marginTop="32dp"/>
+
+        <TextView
+            android:id="@+id/saving"
+            android:visibility="invisible"
+            style="@style/LabelStyle"
+            android:fontFamily="@font/open_sans_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"
+            android:text="@string/rating_saving" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/rating_thanks"
-        style="@style/LabelStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:visibility="gone"
-        android:text="@string/rating_thanks_text" />
+        android:orientation="vertical"
+        android:visibility="invisible"
+        android:layout_marginTop="32dp">
+
+        <TextView
+            style="@style/LabelStyle"
+            android:fontFamily="@font/open_sans_semibold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/rating_thanks_text"
+            android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
 
 </LinearLayout>

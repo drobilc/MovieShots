@@ -11,7 +11,7 @@
         android:layout_width="48dp"
         android:layout_height="71dp"
         android:layout_gravity="center_vertical"
-        android:background="@color/colorSecondaryText"/>
+        android:background="@color/colorMovieCover"/>
 
     <LinearLayout
         android:layout_width="match_parent"
