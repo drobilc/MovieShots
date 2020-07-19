@@ -11,14 +11,15 @@
     android:paddingTop="48dp">
 
     <TextView
+        android:id="@+id/drinking_game_subtitle_text"
+        style="@style/ImportantTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="15sp"
-        android:fontFamily="@font/open_sans_semibold"
-        android:textAllCaps="true"
-        android:letterSpacing="0.7"
-        android:text="@string/bonus_words_title"/>
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/playfair_display_bold"
+        android:text="@string/bonus_words_title"
+        android:textAlignment="center"
+        android:textSize="26sp" />
 
     <TextView
         style="@style/LabelStyle"

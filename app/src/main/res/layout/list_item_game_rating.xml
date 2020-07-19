@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="32dp"
+    android:paddingRight="32dp"
+    android:paddingTop="48dp"
+    android:paddingBottom="32dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/drinking_game_subtitle_text"
+        style="@style/ImportantTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/playfair_display_bold"
+        android:text="@string/rating_title"
+        android:textAlignment="center"
+        android:textSize="26sp" />
+
+    <TextView
+        style="@style/LabelStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/rating_text" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        android:layout_gravity="center_horizontal"
+        android:maxHeight="33dip"
+        android:minHeight="31dip"
+        android:numStars="5"
+        android:max="5"
+        android:rating="4"
+        android:progressDrawable="@drawable/flame_rating_bar"
+        android:stepSize="0.5" />
+
+</LinearLayout>

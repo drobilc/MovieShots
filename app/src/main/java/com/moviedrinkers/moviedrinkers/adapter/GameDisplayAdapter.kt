@@ -20,6 +20,7 @@ class PlayerCue(val position: Int, val player: DrinkingGamePlayer): Item()
 class BonusIntro: Item()
 class BonusCue(val position: Int, var drinkingCue: DrinkingCue): Item()
 class Spacer: Item()
+class GameRating(val game: DrinkingGame): Item()
 
 class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,9 +31,13 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
         for ((index, player) in game.players.withIndex())
             this.items.add(PlayerCue(index + 1, player))
 
-        this.items.add(BonusIntro())
-        for ((index, bonusWord) in game.bonusWords.withIndex())
-            this.items.add(BonusCue(index, bonusWord))
+        if (game.bonusWords.size > 0) {
+            this.items.add(BonusIntro())
+            for ((index, bonusWord) in game.bonusWords.withIndex())
+                this.items.add(BonusCue(index, bonusWord))
+        }
+
+        this.items.add(GameRating(game))
 
         this.items.add(Spacer())
     }
@@ -94,6 +99,10 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
         fun bind() {}
     }
 
+    class GameRatingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind() {}
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
@@ -102,6 +111,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             TYPE_BONUS_WORDS_INTRO -> BonusIntroViewHolder(inflater.inflate(R.layout.list_item_bonus_intro, parent, false))
             TYPE_BONUS_WORD -> BonusCueViewHolder(inflater.inflate(R.layout.list_item_bonus_word, parent, false))
             TYPE_SPACER -> SpacerViewHolder(inflater.inflate(R.layout.list_item_spacer, parent, false))
+            TYPE_RATE_GAME -> GameRatingViewHolder(inflater.inflate(R.layout.list_item_game_rating, parent, false))
             else -> CueViewHolder(inflater.inflate(R.layout.list_item_game_display, parent, false))
         }
     }
@@ -130,6 +140,8 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             return TYPE_BONUS_WORDS_INTRO
         if (item is BonusCue)
             return TYPE_BONUS_WORD
+        if (item is GameRating)
+            return TYPE_RATE_GAME
         return TYPE_SPACER
     }
 
@@ -139,6 +151,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
         private const val TYPE_BONUS_WORDS_INTRO = 4
         private const val TYPE_BONUS_WORD = 8
         private const val TYPE_SPACER = 16
+        private const val TYPE_RATE_GAME = 32
     }
 
 }

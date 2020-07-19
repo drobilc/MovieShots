@@ -63,8 +63,10 @@
     <string name="the">the</string>
     <string name="rules_text">Each player should choose their colour and drink every time their word appears in the movie.</string>
     <string name="movie_suggestion_default">Harry Potter and the Prisoner of Azkaban</string>
-    <string name="bonus_words_title">Bonus words</string>
+    <string name="bonus_words_title">Bonus hot words</string>
     <string name="bonus_words_rules_text">To make this drinking game even more fun, some additional bonus words have been generated for you. If any of the following bonus words appear, everybody drinks!</string>
+    <string name="rating_text">Did you like this game? Help other movie watchers by rating it.</string>
+    <string name="rating_title">How hot was this game?</string>
 
 
 </resources>
