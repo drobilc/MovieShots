@@ -67,6 +67,7 @@
     <string name="bonus_words_rules_text">To make this drinking game even more fun, some additional bonus words have been generated for you. If any of the following bonus words appear, everybody drinks!</string>
     <string name="rating_text">Did you like this game? Help other movie watchers by rating it.</string>
     <string name="rating_title">How hot was this game?</string>
+    <string name="movie_suggestion_year_default">2002</string>
 
 
 </resources>

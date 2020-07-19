@@ -3,12 +3,14 @@ package com.moviedrinkers.moviedrinkers.data
 import org.json.JSONObject
 
 data class DrinkingGame(
+    val id: String,
     val movie: Movie,
     val players: List<DrinkingGamePlayer>,
     val bonusWords: List<DrinkingCue>
 ) {
     companion object {
         fun fromJson(jsonObject: JSONObject): DrinkingGame {
+            val gameId = jsonObject.optString("id", "")
             val playersArray = jsonObject.getJSONArray("words")
             val bonusWordsArray = jsonObject.getJSONArray("bonus_words")
 
@@ -35,11 +37,7 @@ data class DrinkingGame(
                 movieJson
             )
 
-            return DrinkingGame(
-                movie,
-                players,
-                bonusWords
-            )
+            return DrinkingGame(gameId, movie, players, bonusWords)
         }
     }
 }

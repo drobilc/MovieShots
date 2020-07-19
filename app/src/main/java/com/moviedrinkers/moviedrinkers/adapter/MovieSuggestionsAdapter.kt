@@ -12,6 +12,7 @@ import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_suggestion.view.*
 
 
@@ -24,7 +25,21 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val newView = convertView ?: inflater.inflate(R.layout.list_item_suggestion, parent, false)
-        newView.movie_title.text = this.suggestions[position].title
+        val suggestion = this.suggestions[position]
+
+        newView.movie_title.text = suggestion.title
+
+        if (suggestion.year != 0)
+            newView.movie_year.text = suggestion.year.toString()
+        else
+            newView.movie_year.text = ""
+
+        if (suggestion.cover.isNotBlank()) {
+            Picasso.get().load(suggestion.cover).into(newView.movie_cover)
+        } else {
+            newView.movie_cover.setImageDrawable(null)
+        }
+
         return newView
     }
 

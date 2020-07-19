@@ -3,15 +3,39 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/movie_title"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/movie_cover"
+        android:layout_width="48dp"
+        android:layout_height="71dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colorSecondaryText"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/movie_suggestion_default"
-        android:textSize="20sp"
-        android:fontFamily="@font/open_sans_light"/>
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_suggestion_default"
+            android:textSize="20sp"
+            android:fontFamily="@font/open_sans"/>
+
+        <TextView
+            android:id="@+id/movie_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_suggestion_year_default"
+            android:textSize="18sp"
+            android:fontFamily="@font/open_sans_light"/>
+
+    </LinearLayout>
 
 </LinearLayout>
