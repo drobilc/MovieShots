@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.android.volley.*
+import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
-import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
         val queue = VolleySingleton.getInstance(this.applicationContext).requestQueue
 
-        val jsonRequest = Api.generateGame(movieTitle, numberOfShots, numberOfPlayers, Response.Listener {
+        val api = (this.applicationContext as MovieShotsApplication).getApi()
+        val jsonRequest = api.generateGame(movieTitle, numberOfShots, numberOfPlayers, Response.Listener {
             if (it.has("error")) {
                 val exception =
                     ApiException.fromJson(

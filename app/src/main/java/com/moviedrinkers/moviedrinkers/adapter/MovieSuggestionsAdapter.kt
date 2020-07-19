@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.Filter
 import android.widget.Filterable
 import com.android.volley.Response
+import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.Movie
@@ -76,7 +77,8 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
                 it.tag == VolleySingleton.MOVIE_SUGGESTIONS_TAG
             }
 
-            val jsonRequest = Api.getSuggestions(keywords, Response.Listener {
+            val api = (context.applicationContext as MovieShotsApplication).getApi()
+            val jsonRequest = api.getSuggestions(keywords, Response.Listener {
                 // The server returned movie suggestions, display them
                 val newSuggestions = arrayListOf<Movie>()
 
