@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <AutoCompleteTextView
+        <com.moviedrinkers.moviedrinkers.DelayedAutoCompleteTextView
             android:id="@+id/movie_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
