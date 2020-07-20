@@ -8,6 +8,7 @@ import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
+import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
 import com.moviedrinkers.moviedrinkers.fragment.GameDisplayFragment
 import com.moviedrinkers.moviedrinkers.fragment.SearchFragment
@@ -55,13 +56,13 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         transaction.commit()
     }
 
-    private fun generateGame(movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
+    private fun generateGame(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
         displayGameFragment.displayLoadingScreen(true)
 
         val queue = VolleySingleton.getInstance(this.applicationContext).requestQueue
 
         val api = (this.applicationContext as MovieShotsApplication).getApi()
-        val jsonRequest = api.generateGame(movieTitle, numberOfShots, numberOfPlayers, Response.Listener {
+        val jsonRequest = api.generateGame(selectedMovie, movieTitle, numberOfShots, numberOfPlayers, Response.Listener {
             if (it.has("error")) {
                 val exception =
                     ApiException.fromJson(
@@ -116,9 +117,9 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         queue.add(jsonRequest)
     }
 
-    override fun onGameSearched(movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
+    override fun onGameSearched(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
         // This function is called when the search fragment button is clicked
-        generateGame(movieTitle, numberOfShots, numberOfPlayers)
+        generateGame(selectedMovie, movieTitle, numberOfShots, numberOfPlayers)
 
         // Swap the current fragment to the GameDisplayFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()

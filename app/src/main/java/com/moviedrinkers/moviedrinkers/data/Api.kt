@@ -20,6 +20,7 @@ class Api(private val applicationKey: String) {
     }
 
     private fun getGenerateGameUrl(
+        selectedMovie: Movie?,
         movieTitle: String,
         intoxication: Int,
         players: Int
@@ -29,8 +30,12 @@ class Api(private val applicationKey: String) {
             .appendQueryParameter("movie", movieTitle)
             .appendQueryParameter("intoxication", intoxication.toString())
             .appendQueryParameter("players", players.toString())
-            .build()
-        return generatedGameUrl.toString()
+
+        if (selectedMovie != null) {
+            generatedGameUrl.appendQueryParameter("movie_id", selectedMovie.id)
+        }
+
+        return generatedGameUrl.build().toString()
     }
 
     private fun getRateGameUrl(gameId: String, rating: Float): String {
@@ -51,13 +56,14 @@ class Api(private val applicationKey: String) {
     }
 
     fun generateGame(
+        selectedMovie: Movie?,
         movieTitle: String,
         intoxication: Int,
         players: Int,
         listener: Response.Listener<JSONObject>,
         errorListener: Response.ErrorListener
     ): JsonObjectRequest {
-        val url = this.getGenerateGameUrl(movieTitle, intoxication, players)
+        val url = this.getGenerateGameUrl(selectedMovie, movieTitle, intoxication, players)
         val jsonRequest =
             JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener)
         jsonRequest.tag = VolleySingleton.GAME_GENERATION_TAG

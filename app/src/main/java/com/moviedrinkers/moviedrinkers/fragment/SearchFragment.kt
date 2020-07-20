@@ -2,6 +2,8 @@ package com.moviedrinkers.moviedrinkers.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +13,15 @@ import androidx.fragment.app.Fragment
 import com.jem.rubberpicker.RubberSeekBar
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.adapter.MovieSuggestionsAdapter
+import com.moviedrinkers.moviedrinkers.data.Movie
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
+
 
 class SearchFragment : Fragment() {
 
     interface OnSearch {
-        fun onGameSearched(movieTitle: String, numberOfShots: Int, numberOfPlayers: Int)
+        fun onGameSearched(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int)
         fun onRetry()
     }
 
@@ -29,6 +33,10 @@ class SearchFragment : Fragment() {
 
     private var currentIntoxicationLevel: Int = 2
     private var currentNumberOfPlayers: Int = 1
+
+    // If user clicks on the movie suggestion, this variable holds additional movie information
+    // such as movie id (which is not possible if user simply types in the movie name)
+    private var selectedMovie: Movie? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,14 +117,32 @@ class SearchFragment : Fragment() {
             val numberOfShots = view.intoxication_level_picker.getCurrentValue()
             val numberOfPlayers = view.number_of_players_picker.getCurrentValue()
 
-            this.callback.onGameSearched(movieTitle, numberOfShots, numberOfPlayers)
+            this.callback.onGameSearched(selectedMovie, movieTitle, numberOfShots, numberOfPlayers)
         }
 
         // Autocomplete from the server
         val adapter = MovieSuggestionsAdapter(context!!)
         view.movie_title_input.setAdapter(adapter)
+
+        // Every time the text changes, the selected movie resets. This ensures that only if user
+        // selects movie from dropdown, the movie is not null.
+        view.movie_title_input.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                selectedMovie = null
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                selectedMovie = null
+            }
+            override fun afterTextChanged(s: Editable) {
+                selectedMovie = null
+            }
+        })
+
         view.movie_title_input.onItemClickListener = AdapterView.OnItemClickListener{
-                parent, view, position, id->
+                _, _, position, _ ->
+
+            // UPDATE selected movie to match clicked movie
+            selectedMovie = adapter.getMovie(position)
 
             // Hide the keyboard because user has selected an item
             val viewInFocus = activity?.currentFocus

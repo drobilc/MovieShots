@@ -10,7 +10,6 @@ import android.widget.Filterable
 import com.android.volley.Response
 import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
-import com.moviedrinkers.moviedrinkers.data.Api
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import com.squareup.picasso.Picasso
@@ -42,6 +41,10 @@ class MovieSuggestionsAdapter(private val context: Context) : BaseAdapter(), Fil
         }
 
         return newView
+    }
+
+    fun getMovie(position: Int): Movie {
+        return this.suggestions[position]
     }
 
     override fun getItem(position: Int): Any {
