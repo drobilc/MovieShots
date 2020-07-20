@@ -9,7 +9,9 @@
     <ImageView
         android:id="@+id/movie_cover"
         android:layout_width="48dp"
-        android:layout_height="71dp"
+        android:layout_height="72dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         android:layout_gravity="center_vertical"
         android:background="@color/colorMovieCover"/>
 

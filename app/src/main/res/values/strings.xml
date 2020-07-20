@@ -72,6 +72,8 @@
     <string name="rating_saving">Saving...</string>
     <string name="rating_saved">Saved</string>
     <string name="rating_error">An error occurred</string>
+    <string name="popular_games_intro_text">Play some already generated games that other users liked.</string>
+    <string name="popular_games_intro_title">What to watch?</string>
 
 
 </resources>

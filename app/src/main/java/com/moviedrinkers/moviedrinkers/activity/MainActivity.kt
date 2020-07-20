@@ -11,6 +11,7 @@ import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
 import com.moviedrinkers.moviedrinkers.fragment.GameDisplayFragment
+import com.moviedrinkers.moviedrinkers.fragment.PopularGamesFragment
 import com.moviedrinkers.moviedrinkers.fragment.SearchFragment
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 
@@ -18,22 +19,23 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
     private lateinit var searchFragment: SearchFragment
     private lateinit var displayGameFragment: GameDisplayFragment
+    private lateinit var popularGamesFragment: PopularGamesFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // Create both fragments, pass the on search listener to search fragment
-        searchFragment =
-            SearchFragment.newInstance()
+        searchFragment = SearchFragment.newInstance()
         searchFragment.setOnSearchListener(this)
 
-        displayGameFragment =
-            GameDisplayFragment.newInstance()
+        displayGameFragment = GameDisplayFragment.newInstance()
+
+        popularGamesFragment = PopularGamesFragment.newInstance()
 
         // Add the search fragment to screen
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, searchFragment)
+        transaction.add(R.id.fragment_container, popularGamesFragment)
         transaction.commit()
 
     }
