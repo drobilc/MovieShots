@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="200" src="https://github.com/drobilc/MovieShots/blob/master/app/src/main/ic_launcher-playstore.png" alt="MovieShots app logo">
+  <img height="150" src="https://github.com/drobilc/MovieShots/blob/master/documentation/logo.png" alt="MovieShots app logo">
 </p>
 
 # MovieShots Android app
