@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
     private fun displayMovieData(movie: TrendingMovie) {
         val movieFragment: Fragment = MovieDisplayFragment.newInstance(movie)
+        (movieFragment as MovieDisplayFragment).setOnSearchListener(this)
 
         // Swap the current fragment to the PopularGamesFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -97,6 +98,21 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
             R.anim.fade_out
         )
         transaction.replace(R.id.fragment_container, exceptionFragment)
+        transaction.commit()
+    }
+
+    override fun displayGame(game: DrinkingGame) {
+        val displayGameFragment = GameDisplayFragment.newInstance(game)
+        // Swap the current fragment to the GameDisplayFragment
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.slide_in_up,
+            R.anim.slide_out_up,
+            R.anim.slide_in_down,
+            R.anim.slide_out_down
+        )
+        transaction.replace(R.id.fragment_container, displayGameFragment)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 

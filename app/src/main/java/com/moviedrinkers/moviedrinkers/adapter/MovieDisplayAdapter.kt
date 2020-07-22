@@ -13,7 +13,11 @@ import kotlinx.android.synthetic.main.list_item_movie_display_intro.view.*
 import kotlinx.android.synthetic.main.list_item_trending_movie.view.movie_cover
 import kotlinx.android.synthetic.main.list_item_trending_movie.view.movie_title
 
-class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieDisplayAdapter(private val movie: TrendingMovie, val itemClickListener: OnGameClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface OnGameClickListener {
+        fun onGameClicked(game: DrinkingGame)
+    }
 
     abstract class Item
     class Intro: Item()
@@ -53,8 +57,9 @@ class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapte
         val movieTitle = view.movie_title
         val movieRating = view.movie_rating
         val movieNumberOfRatings = view.movie_number_of_ratings
+        val fullView = view
 
-        fun bind(game: DrinkingGame) {
+        fun bind(game: DrinkingGame, clickListener: OnGameClickListener) {
 
             if (game.movie.cover.isNotBlank()) {
                 Picasso.get().load(game.movie.cover).into(movieCover)
@@ -67,6 +72,10 @@ class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapte
             movieRating.text = game.rating.toString()
 
             movieNumberOfRatings.text = movieNumberOfRatings.context.resources.getQuantityString(R.plurals.number_of_ratings, game.numberOfReviews, game.numberOfReviews)
+
+            fullView.setOnClickListener {
+                clickListener.onGameClicked(game)
+            }
 
         }
     }
@@ -85,7 +94,7 @@ class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapte
         val item = this.items[position]
         when (getItemViewType(position)) {
             TYPE_INTRO -> (holder as IntroViewHolder).bind(this.movie)
-            TYPE_GAME -> (holder as GameViewHolder).bind((item as GameDisplay).game)
+            TYPE_GAME -> (holder as GameViewHolder).bind((item as GameDisplay).game, itemClickListener)
         }
     }
 

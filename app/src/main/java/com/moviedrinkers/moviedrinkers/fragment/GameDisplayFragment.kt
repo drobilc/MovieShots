@@ -9,10 +9,11 @@ import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.moviedrinkers.moviedrinkers.adapter.GameDisplayAdapter
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.adapter.GameDisplayAdapter
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import kotlinx.android.synthetic.main.fragment_game_display.*
+import kotlinx.android.synthetic.main.fragment_game_display.view.*
 
 
 class GameDisplayFragment : Fragment() {
@@ -51,25 +52,33 @@ class GameDisplayFragment : Fragment() {
     }
 
     fun displayGame(game: DrinkingGame) {
-        viewManager = LinearLayoutManager(context)
-        viewAdapter =
-            GameDisplayAdapter(game)
+        if (view != null)
+            this.displayGame(view!!, game, 0)
+    }
 
-        recyclerView = generated_game.apply {
+    fun displayGame(view: View, game: DrinkingGame, animationOffset: Long) {
+        viewManager = LinearLayoutManager(context)
+        viewAdapter = GameDisplayAdapter(game)
+
+        recyclerView = view.generated_game.apply {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
+        this.displayLoadingScreen(false)
+
         val slideUp = AnimationUtils.loadAnimation(context!!.applicationContext,
             R.anim.slide_in_up
         )
+        slideUp.startOffset = animationOffset
         recyclerView.startAnimation(slideUp)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            drinkingGame = it.getParcelable("game")
         }
     }
 
@@ -84,6 +93,8 @@ class GameDisplayFragment : Fragment() {
             this.displayLoadingScreen(true)
             handler.removeCallbacksAndMessages(null)
             this.handler.post(run)
+        } else {
+            displayGame(view, drinkingGame!!, 800)
         }
 
         return view
@@ -97,6 +108,14 @@ class GameDisplayFragment : Fragment() {
         fun newInstance() =
             GameDisplayFragment().apply {
                 arguments = Bundle().apply {
+                }
+            }
+
+        @JvmStatic
+        fun newInstance(game: DrinkingGame) =
+            GameDisplayFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("game", game)
                 }
             }
     }
