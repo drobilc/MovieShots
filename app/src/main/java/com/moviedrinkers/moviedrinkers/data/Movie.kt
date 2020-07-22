@@ -24,6 +24,11 @@ data class Movie(
             val cover = jsonObject.optString("cover", "")
             return Movie(id, title, overview, year, duration, cover)
         }
+
+        fun fromTrendingMovie(movie: TrendingMovie): Movie {
+            return Movie(movie.id, movie.title, movie.overview, movie.year, movie.duration, movie.cover)
+        }
+
     }
 
     override fun toString(): String {
@@ -58,7 +63,18 @@ data class TrendingMovie(
 
             val games = arrayListOf<DrinkingGame>()
 
-            return TrendingMovie(id, title, overview, year, duration, cover, rating, numberOfReviews, games)
+            val movie = TrendingMovie(id, title, overview, year, duration, cover, rating, numberOfReviews, games)
+
+            val normalMovie = Movie.fromTrendingMovie(movie)
+
+            val drinkingGames = jsonObject.optJSONArray("games")
+            for (i in 0 until drinkingGames.length()) {
+                val drinkingGameJson = drinkingGames.getJSONObject(i)
+                val drinkingGame = DrinkingGame.fromJson(drinkingGameJson, normalMovie)
+                games.add(drinkingGame)
+            }
+
+            return movie
         }
     }
 

@@ -14,7 +14,8 @@ data class DrinkingGame(
     val numberOfReviews: Int
 ): Parcelable {
     companion object {
-        fun fromJson(jsonObject: JSONObject): DrinkingGame {
+
+        fun fromJson(jsonObject: JSONObject, movie: Movie): DrinkingGame {
             val gameId = jsonObject.optString("id", "")
             val playersArray = jsonObject.getJSONArray("words")
             val bonusWordsArray = jsonObject.getJSONArray("bonus_words")
@@ -37,15 +38,16 @@ data class DrinkingGame(
                 bonusWords.add(drinkingCue)
             }
 
-            val movieJson = jsonObject.getJSONObject("movie")
-            val movie = Movie.fromJson(
-                movieJson
-            )
-
             val rating = jsonObject.optDouble("rating", 0.0)
             val numberOfReviews = jsonObject.optInt("number_of_reviews", 0)
 
             return DrinkingGame(gameId, movie, players, bonusWords, rating, numberOfReviews)
+        }
+
+        fun fromJson(jsonObject: JSONObject): DrinkingGame {
+            val movieJson = jsonObject.getJSONObject("movie")
+            val movie = Movie.fromJson(movieJson)
+            return fromJson(jsonObject, movie)
         }
     }
 }
