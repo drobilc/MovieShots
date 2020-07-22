@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:layout_marginTop="20dp">
 
     <LinearLayout
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:paddingBottom="32dp"
+        android:paddingBottom="52dp"
         android:paddingTop="32dp">
 
         <LinearLayout
@@ -65,4 +66,9 @@
             android:text="@string/hottest_games_description" />
     </LinearLayout>
 
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorMovieCover"/>
+
+</LinearLayout>

@@ -3,52 +3,81 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="24dp">
-
-    <ImageView
-        android:id="@+id/movie_cover"
-        android:layout_width="96dp"
-        android:layout_height="144dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center_vertical"
-        android:background="@color/colorMovieCover" />
+    android:orientation="vertical">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="24dp"
-        android:layout_gravity="top">
+        android:orientation="horizontal"
+        android:padding="24dp">
 
-        <TextView
-            android:id="@+id/movie_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/movie_suggestion_default"
-            android:textSize="22sp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:layout_marginBottom="8dp"/>
+        <ImageView
+            android:id="@+id/movie_cover"
+            android:layout_width="96dp"
+            android:layout_height="144dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center_vertical"
+            android:background="@color/colorMovieCover" />
 
-        <TextView
-            android:id="@+id/movie_description"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/movie_overview_default"
-            android:textSize="16sp"
-            android:fontFamily="@font/open_sans_light"
-            android:layout_marginBottom="8dp"/>
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:layout_gravity="top">
 
-        <TextView
-            android:id="@+id/movie_additional_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rating_default"
-            android:textColor="@color/colorSecondaryText"
-            android:textSize="16sp"
-            android:fontFamily="@font/open_sans_light"/>
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_suggestion_default"
+                android:textSize="22sp"
+                android:fontFamily="@font/open_sans_semibold"
+                android:layout_marginBottom="8dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/movie_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/movie_overview_default"
+                    android:maxHeight="75dp"
+                    android:background="@drawable/background_white_transparent_gradient"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/open_sans_light"
+                    android:layout_marginBottom="8dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/background_white_transparent_gradient"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/movie_additional_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rating_default"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="16sp"
+                android:fontFamily="@font/open_sans_light"/>
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorMovieCover"/>
 
 </LinearLayout>
