@@ -62,7 +62,7 @@ class GameDisplayFragment : Fragment() {
         }
 
         val slideUp = AnimationUtils.loadAnimation(context!!.applicationContext,
-            R.anim.sliide_up
+            R.anim.slide_in_up
         )
         recyclerView.startAnimation(slideUp)
     }

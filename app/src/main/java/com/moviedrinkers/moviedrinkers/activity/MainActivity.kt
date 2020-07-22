@@ -35,9 +35,27 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
         // Add the search fragment to screen
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, popularGamesFragment)
+        transaction.add(R.id.fragment_container, searchFragment)
         transaction.commit()
 
+    }
+
+    override fun onMenuButtonClicked() {
+        displayPopularGamesList()
+    }
+
+    private fun displayPopularGamesList() {
+        // Swap the current fragment to the PopularGamesFragment
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.slide_in_down,
+            R.anim.slide_out_down,
+            R.anim.slide_in_up,
+            R.anim.slide_out_up
+        )
+        transaction.replace(R.id.fragment_container, popularGamesFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun displayExceptionFragment(exception: ApiException) {
@@ -126,10 +144,10 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         // Swap the current fragment to the GameDisplayFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
-            R.anim.sliide_up,
-            R.anim.slide_up,
-            R.anim.slide_down,
-            R.anim.sliide_down
+            R.anim.slide_in_up,
+            R.anim.slide_out_up,
+            R.anim.slide_in_down,
+            R.anim.slide_out_down
         )
         transaction.replace(R.id.fragment_container, displayGameFragment)
         transaction.addToBackStack(null)

@@ -22,6 +22,7 @@ class SearchFragment : Fragment() {
 
     interface OnSearch {
         fun onGameSearched(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int)
+        fun onMenuButtonClicked()
         fun onRetry()
     }
 
@@ -93,6 +94,10 @@ class SearchFragment : Fragment() {
         view.movie_intro.text = getText(R.string.movie_selection_title)
 
         refreshSliders()
+
+        view.menu_button.setOnClickListener {
+            this.callback.onMenuButtonClicked()
+        }
 
         view.intoxication_level_picker.setOnRubberSeekBarChangeListener(object : RubberSeekBar.OnRubberSeekBarChangeListener {
             override fun onProgressChanged(seekBar: RubberSeekBar, value: Int, fromUser: Boolean) {
