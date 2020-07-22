@@ -5,6 +5,7 @@ import org.json.JSONObject
 data class Movie(
     val id: String,
     val title: String,
+    val overview: String,
     val year: Int,
     val duration: String,
     val cover: String
@@ -14,10 +15,11 @@ data class Movie(
         fun fromJson(jsonObject: JSONObject): Movie {
             val id = jsonObject.optString("id", "")
             val title = jsonObject.optString("title", "")
+            val overview = jsonObject.optString("overview", "")
             val duration = jsonObject.optString("duration", "")
             val year = jsonObject.optInt("year", 0)
             val cover = jsonObject.optString("cover", "")
-            return Movie(id, title, year, duration, cover)
+            return Movie(id, title, overview, year, duration, cover)
         }
     }
 

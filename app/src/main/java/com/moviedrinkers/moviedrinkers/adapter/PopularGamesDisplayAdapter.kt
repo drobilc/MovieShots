@@ -42,15 +42,26 @@ class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): Re
 
         val cover = view.movie_cover
         val movieTitle = view.movie_title
+        val movieDescription = view.movie_description
+        val movieAdditionalInfo = view.movie_additional_info
 
         fun bind(game: DrinkingGame) {
-            if (game.movie.cover != null && game.movie.cover.isNotBlank()) {
+            // Load movie cover into image view
+            if (game.movie.cover.isNotBlank()) {
                 Picasso.get().load(game.movie.cover).into(cover)
             } else {
                 cover.setImageDrawable(null)
             }
 
+            // Set movie title
             movieTitle.text = game.movie.title
+
+            // Set movie description
+            movieDescription.text = game.movie.overview
+
+            // Set additional info about movie
+            movieAdditionalInfo.text = movieAdditionalInfo.context.getString(R.string.review_text, game.rating, game.numberOfReviews)
+
         }
     }
 

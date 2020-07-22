@@ -6,7 +6,9 @@ data class DrinkingGame(
     val id: String,
     val movie: Movie,
     val players: List<DrinkingGamePlayer>,
-    val bonusWords: List<DrinkingCue>
+    val bonusWords: List<DrinkingCue>,
+    val rating: Double,
+    val numberOfReviews: Int
 ) {
     companion object {
         fun fromJson(jsonObject: JSONObject): DrinkingGame {
@@ -37,7 +39,10 @@ data class DrinkingGame(
                 movieJson
             )
 
-            return DrinkingGame(gameId, movie, players, bonusWords)
+            val rating = jsonObject.optDouble("rating", 0.0)
+            val numberOfReviews = jsonObject.optInt("number_of_reviews", 0)
+
+            return DrinkingGame(gameId, movie, players, bonusWords, rating, numberOfReviews)
         }
     }
 }

@@ -35,7 +35,7 @@
             android:id="@+id/movie_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O."
+            android:text="@string/movie_overview_default"
             android:textSize="16sp"
             android:fontFamily="@font/open_sans_light"
             android:layout_marginBottom="8dp"/>
@@ -44,7 +44,7 @@
             android:id="@+id/movie_additional_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rating: 4.87 - 90 reviews"
+            android:text="@string/rating_default"
             android:textColor="@color/colorSecondaryText"
             android:textSize="16sp"
             android:fontFamily="@font/open_sans_light"/>

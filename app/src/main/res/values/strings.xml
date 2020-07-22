@@ -36,6 +36,8 @@
 
     <string name="player_number">Player %d</string>
 
+    <string name="review_text">Rating: %1$.2f - %2$d reviews</string>
+
     <string-array name="loading_messages">
         <item>Finding ice cubes</item>
         <item>Pouring whiskey</item>
@@ -72,8 +74,9 @@
     <string name="rating_saving">Saving...</string>
     <string name="rating_saved">Saved</string>
     <string name="rating_error">An error occurred</string>
-    <string name="popular_games_intro_text">Play some already generated games that other users liked.</string>
-    <string name="popular_games_intro_title">What to watch?</string>
+
+    <string name="movie_overview_default">No description</string>
+    <string name="rating_default">No rating yet</string>
 
 
 </resources>
