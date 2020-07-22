@@ -19,6 +19,8 @@
         android:paddingRight="32dp"
         android:paddingTop="32dp"
         android:paddingBottom="70dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:background="@drawable/game_element_background">
 
         <TextView
