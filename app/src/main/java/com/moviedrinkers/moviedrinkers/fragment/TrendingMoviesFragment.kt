@@ -11,24 +11,24 @@ import com.android.volley.Response
 import com.moviedrinkers.moviedrinkers.EndlessRecyclerViewScrollListener
 import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
-import com.moviedrinkers.moviedrinkers.adapter.PopularGamesDisplayAdapter
-import com.moviedrinkers.moviedrinkers.data.DrinkingGame
+import com.moviedrinkers.moviedrinkers.adapter.PopularMoviesDisplayAdapter
+import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.fragment_popular_games.view.*
 
 
-class PopularGamesFragment : Fragment() {
+class TrendingMoviesFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: PopularGamesDisplayAdapter
+    private lateinit var viewAdapter: PopularMoviesDisplayAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
     private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
     // Current list of games
-    private val games: ArrayList<DrinkingGame> = arrayListOf()
+    private val movies: ArrayList<TrendingMovie> = arrayListOf()
 
-    private fun refreshPopularGamesList(newItems: List<DrinkingGame>) {
+    private fun refreshPopularGamesList(newItems: List<TrendingMovie>) {
         this.viewAdapter.addItems(newItems)
     }
 
@@ -42,7 +42,7 @@ class PopularGamesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_popular_games, container, false)
 
         this.viewManager = LinearLayoutManager(context)
-        this.viewAdapter = PopularGamesDisplayAdapter(this.games)
+        this.viewAdapter = PopularMoviesDisplayAdapter(this.movies)
 
         this.recyclerView = view.popular_games_list.apply {
             setHasFixedSize(false)
@@ -65,16 +65,16 @@ class PopularGamesFragment : Fragment() {
         val queue = VolleySingleton.getInstance(this.context!!.applicationContext).requestQueue
 
         val api = (this.context!!.applicationContext as MovieShotsApplication).getApi()
-        val jsonRequest = api.getPopularGames(page, Response.Listener {
+        val jsonRequest = api.getTrendingMovies(page, Response.Listener {
 
-            // Parse list of DrinkingGame objects
-            val newGames: ArrayList<DrinkingGame> = arrayListOf()
+            // Parse list of TrendingMovie objects
+            val newMovies: ArrayList<TrendingMovie> = arrayListOf()
             for (i in 0 until it.length()) {
-                val drinkingGameJson = it.getJSONObject(i)
-                newGames.add(DrinkingGame.fromJson(drinkingGameJson))
+                val trendingMovieJson = it.getJSONObject(i)
+                newMovies.add(TrendingMovie.fromJson(trendingMovieJson))
             }
 
-            refreshPopularGamesList(newGames)
+            refreshPopularGamesList(newMovies)
 
         }, Response.ErrorListener {
         })
@@ -84,11 +84,11 @@ class PopularGamesFragment : Fragment() {
 
     companion object {
 
-        const val TAG: String = "POPULAR_GAMES_FRAGMENT"
+        const val TAG: String = "TRENDING_MOVIES_FRAGMENT"
 
         @JvmStatic
         fun newInstance() =
-            PopularGamesFragment().apply {
+            TrendingMoviesFragment().apply {
                 arguments = Bundle().apply {
                 }
             }

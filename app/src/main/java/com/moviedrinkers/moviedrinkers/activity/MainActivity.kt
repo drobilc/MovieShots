@@ -12,7 +12,7 @@ import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
 import com.moviedrinkers.moviedrinkers.fragment.GameDisplayFragment
-import com.moviedrinkers.moviedrinkers.fragment.PopularGamesFragment
+import com.moviedrinkers.moviedrinkers.fragment.TrendingMoviesFragment
 import com.moviedrinkers.moviedrinkers.fragment.SearchFragment
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
     private fun displayPopularGamesList() {
         // If popular games list fragment already exists, use it, otherwise create a new instance
-        var popularGamesFragment: Fragment? = supportFragmentManager.findFragmentByTag(PopularGamesFragment.TAG)
+        var popularGamesFragment: Fragment? = supportFragmentManager.findFragmentByTag(TrendingMoviesFragment.TAG)
         if (popularGamesFragment == null) {
-            popularGamesFragment = PopularGamesFragment.newInstance()
+            popularGamesFragment = TrendingMoviesFragment.newInstance()
         }
 
         // Swap the current fragment to the PopularGamesFragment
@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
             R.anim.slide_in_up,
             R.anim.slide_out_up
         )
-        transaction.replace(R.id.fragment_container, popularGamesFragment, PopularGamesFragment.TAG)
-        transaction.addToBackStack(PopularGamesFragment.TAG)
+        transaction.replace(R.id.fragment_container, popularGamesFragment, TrendingMoviesFragment.TAG)
+        transaction.addToBackStack(TrendingMoviesFragment.TAG)
         transaction.commit()
     }
 

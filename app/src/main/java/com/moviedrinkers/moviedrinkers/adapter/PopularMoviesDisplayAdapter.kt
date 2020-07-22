@@ -5,62 +5,62 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.moviedrinkers.moviedrinkers.R
-import com.moviedrinkers.moviedrinkers.data.DrinkingGame
+import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.list_item_popular_game.view.*
+import kotlinx.android.synthetic.main.list_item_trending_movie.view.*
 
-class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     abstract class Item
     class Intro: Item()
-    class GameDisplay(val index: Int, val game: DrinkingGame): Item()
+    class MovieDisplay(val index: Int, val movie: TrendingMovie): Item()
 
     private var items: ArrayList<Item> = arrayListOf()
 
-    fun addItems(newItems: List<DrinkingGame>) {
+    fun addItems(newItems: List<TrendingMovie>) {
         val lastIndex = this.items.size
 
-        for ((index, game) in newItems.withIndex()) {
-            this.items.add(GameDisplay(lastIndex + index + 1, game))
+        for ((index, movie) in newItems.withIndex()) {
+            this.items.add(MovieDisplay(lastIndex + index + 1, movie))
         }
-        this.games.addAll(newItems)
+        this.movies.addAll(newItems)
 
         this.notifyItemRangeInserted(lastIndex, newItems.size)
     }
 
     init {
         this.items.add(Intro())
-        for ((index, game) in games.withIndex())
-            this.items.add(GameDisplay(index + 1, game))
+        for ((index, movie) in movies.withIndex())
+            this.items.add(MovieDisplay(index + 1, movie))
     }
 
     class IntroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind() {}
     }
 
-    class GameViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val cover = view.movie_cover
         val movieTitle = view.movie_title
         val movieDescription = view.movie_description
         val movieAdditionalInfo = view.movie_additional_info
 
-        fun bind(game: DrinkingGame) {
+        fun bind(movie: TrendingMovie) {
             // Load movie cover into image view
-            if (game.movie.cover.isNotBlank()) {
-                Picasso.get().load(game.movie.cover).into(cover)
+            if (movie.cover.isNotBlank()) {
+                Picasso.get().load(movie.cover).into(cover)
             } else {
                 cover.setImageDrawable(null)
             }
 
             // Set movie title
-            movieTitle.text = game.movie.title
+            movieTitle.text = movie.title
 
             // Set movie description
-            movieDescription.text = game.movie.overview
+            movieDescription.text = movie.overview
 
             // Set additional info about movie
-            movieAdditionalInfo.text = movieAdditionalInfo.context.getString(R.string.review_text, game.rating, game.numberOfReviews)
+            movieAdditionalInfo.text = movieAdditionalInfo.context.getString(R.string.review_text, movie.rating, movie.numberOfReviews)
 
         }
     }
@@ -68,9 +68,9 @@ class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): Re
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            TYPE_INTRO -> IntroViewHolder(inflater.inflate(R.layout.list_item_popular_games_intro, parent, false))
-            TYPE_GAME -> GameViewHolder(inflater.inflate(R.layout.list_item_popular_game, parent, false))
-            else -> GameViewHolder(inflater.inflate(R.layout.list_item_popular_game, parent, false))
+            TYPE_INTRO -> IntroViewHolder(inflater.inflate(R.layout.list_item_trending_movie_intro, parent, false))
+            TYPE_MOVIE -> MovieViewHolder(inflater.inflate(R.layout.list_item_trending_movie, parent, false))
+            else -> MovieViewHolder(inflater.inflate(R.layout.list_item_trending_movie, parent, false))
         }
     }
 
@@ -79,7 +79,7 @@ class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): Re
         val item = this.items[position]
         when (getItemViewType(position)) {
             TYPE_INTRO -> (holder as IntroViewHolder).bind()
-            TYPE_GAME -> (holder as GameViewHolder).bind((item as GameDisplay).game)
+            TYPE_MOVIE -> (holder as MovieViewHolder).bind((item as MovieDisplay).movie)
         }
     }
 
@@ -89,12 +89,12 @@ class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): Re
         val item = this.items[position]
         if (item is Intro)
             return TYPE_INTRO
-        return TYPE_GAME
+        return TYPE_MOVIE
     }
 
     companion object {
         private const val TYPE_INTRO = 1
-        private const val TYPE_GAME = 2
+        private const val TYPE_MOVIE = 2
     }
 
 }

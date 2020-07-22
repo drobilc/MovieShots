@@ -77,9 +77,9 @@
 
     <string name="movie_overview_default">No description</string>
     <string name="rating_default">No rating yet</string>
-    <string name="hottest_games_title">Hottest Games</string>
+    <string name="hottest_games_title">Hottest Movies</string>
     <string name="people_have_spoken">The people have spoken</string>
-    <string name="hottest_games_description">Below, a list of most popular games as rated by you and your fellow players. Stay awesome and keep rating!</string>
+    <string name="hottest_games_description">Below, you can see a list of most popular movies as rated by you and your fellow players. Stay awesome and keep rating!</string>
 
 
 </resources>
