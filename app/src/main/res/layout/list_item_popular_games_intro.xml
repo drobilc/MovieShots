@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -43,42 +43,6 @@
                 android:text="@string/hottest_games_title"
                 android:textAlignment="center"
                 android:textSize="38sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/movie_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/LighterLabelStyle"
-                    android:textSize="14sp"
-                    android:text="very"
-                    android:layout_weight="1"
-                    android:layout_marginRight="25dp"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:layout_gravity="center"
-                    android:tint="@color/colorSecondaryText"
-                    android:src="@drawable/ic_star_black_24dp" />
-
-                <TextView
-                    android:id="@+id/game_players"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/LighterLabelStyle"
-                    android:textSize="14sp"
-                    android:text="spicey"
-                    android:textAlignment="textEnd"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="25dp"/>
-
-            </LinearLayout>
 
         </LinearLayout>
 
