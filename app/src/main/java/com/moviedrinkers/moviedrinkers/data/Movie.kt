@@ -1,7 +1,10 @@
 package com.moviedrinkers.moviedrinkers.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import org.json.JSONObject
 
+@Parcelize
 data class Movie(
     val id: String,
     val title: String,
@@ -9,7 +12,7 @@ data class Movie(
     val year: Int,
     val duration: String,
     val cover: String
-) {
+): Parcelable {
 
     companion object {
         fun fromJson(jsonObject: JSONObject): Movie {
@@ -28,6 +31,7 @@ data class Movie(
     }
 }
 
+@Parcelize
 data class TrendingMovie(
     val id: String,
     val title: String,
@@ -38,7 +42,7 @@ data class TrendingMovie(
     val rating: Double,
     val numberOfReviews: Int,
     val games: List<DrinkingGame>
-) {
+): Parcelable {
 
     companion object {
         fun fromJson(jsonObject: JSONObject): TrendingMovie {

@@ -1,7 +1,10 @@
 package com.moviedrinkers.moviedrinkers.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import org.json.JSONObject
 
+@Parcelize
 data class DrinkingGame(
     val id: String,
     val movie: Movie,
@@ -9,7 +12,7 @@ data class DrinkingGame(
     val bonusWords: List<DrinkingCue>,
     val rating: Double,
     val numberOfReviews: Int
-) {
+): Parcelable {
     companion object {
         fun fromJson(jsonObject: JSONObject): DrinkingGame {
             val gameId = jsonObject.optString("id", "")

@@ -1,10 +1,13 @@
 package com.moviedrinkers.moviedrinkers.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import org.json.JSONArray
 
+@Parcelize
 data class DrinkingGamePlayer(
     val drinkingCues: List<DrinkingCue>
-) {
+): Parcelable {
 
     fun getWords(): String {
         return drinkingCues.joinToString {
