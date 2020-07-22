@@ -3,6 +3,6 @@
     android:shareInterpolator="false">
     <translate
         android:fromXDelta="0%" android:toXDelta="0%"
-        android:fromYDelta="-100%p" android:toYDelta="0%"
-        android:duration="@android:integer/config_mediumAnimTime"/>
+        android:fromYDelta="100%p" android:toYDelta="0%"
+        android:duration="@integer/slide_animation_duration"/>
 </set>
