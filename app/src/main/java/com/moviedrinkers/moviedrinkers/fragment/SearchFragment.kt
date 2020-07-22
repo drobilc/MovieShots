@@ -14,6 +14,7 @@ import com.jem.rubberpicker.RubberSeekBar
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.adapter.MovieSuggestionsAdapter
 import com.moviedrinkers.moviedrinkers.data.Movie
+import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
@@ -23,6 +24,7 @@ class SearchFragment : Fragment() {
     interface OnSearch {
         fun onGameSearched(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int)
         fun onMenuButtonClicked()
+        fun onMovieSelected(movie: TrendingMovie)
         fun onRetry()
     }
 

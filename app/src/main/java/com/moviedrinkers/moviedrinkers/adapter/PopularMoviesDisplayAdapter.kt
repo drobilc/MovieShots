@@ -9,7 +9,11 @@ import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_trending_movie.view.*
 
-class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, val itemClickListener: OnTrendingMovieClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface OnTrendingMovieClickListener {
+        fun onTrendingMovieClicked(movie: TrendingMovie)
+    }
 
     abstract class Item
     class Intro: Item()
@@ -40,12 +44,13 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>):
 
     class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        val fullView = view
         val cover = view.movie_cover
         val movieTitle = view.movie_title
         val movieDescription = view.movie_description
         val movieAdditionalInfo = view.movie_additional_info
 
-        fun bind(movie: TrendingMovie) {
+        fun bind(movie: TrendingMovie, clickListener: OnTrendingMovieClickListener) {
             // Load movie cover into image view
             if (movie.cover.isNotBlank()) {
                 Picasso.get().load(movie.cover).into(cover)
@@ -61,6 +66,10 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>):
 
             // Set additional info about movie
             movieAdditionalInfo.text = movieAdditionalInfo.context.getString(R.string.review_text, movie.rating, movie.numberOfReviews)
+
+            fullView.setOnClickListener {
+                clickListener.onTrendingMovieClicked(movie)
+            }
 
         }
     }
@@ -79,7 +88,7 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>):
         val item = this.items[position]
         when (getItemViewType(position)) {
             TYPE_INTRO -> (holder as IntroViewHolder).bind()
-            TYPE_MOVIE -> (holder as MovieViewHolder).bind((item as MovieDisplay).movie)
+            TYPE_MOVIE -> (holder as MovieViewHolder).bind((item as MovieDisplay).movie, itemClickListener)
         }
     }
 

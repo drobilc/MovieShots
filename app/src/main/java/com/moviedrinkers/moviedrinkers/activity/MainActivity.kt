@@ -10,10 +10,8 @@ import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.Movie
-import com.moviedrinkers.moviedrinkers.fragment.ErrorFragment
-import com.moviedrinkers.moviedrinkers.fragment.GameDisplayFragment
-import com.moviedrinkers.moviedrinkers.fragment.TrendingMoviesFragment
-import com.moviedrinkers.moviedrinkers.fragment.SearchFragment
+import com.moviedrinkers.moviedrinkers.data.TrendingMovie
+import com.moviedrinkers.moviedrinkers.fragment.*
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 
 
@@ -40,15 +38,15 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
     }
 
     override fun onMenuButtonClicked() {
-        displayPopularGamesList()
+        displayTrendingMoviesList()
     }
 
-    private fun displayPopularGamesList() {
-        // If popular games list fragment already exists, use it, otherwise create a new instance
-        var popularGamesFragment: Fragment? = supportFragmentManager.findFragmentByTag(TrendingMoviesFragment.TAG)
-        if (popularGamesFragment == null) {
-            popularGamesFragment = TrendingMoviesFragment.newInstance()
-        }
+    override fun onMovieSelected(movie: TrendingMovie) {
+        displayMovieData(movie)
+    }
+
+    private fun displayMovieData(movie: TrendingMovie) {
+        val movieFragment: Fragment = MovieDisplayFragment.newInstance(movie)
 
         // Swap the current fragment to the PopularGamesFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -58,7 +56,28 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
             R.anim.slide_in_up,
             R.anim.slide_out_up
         )
-        transaction.replace(R.id.fragment_container, popularGamesFragment, TrendingMoviesFragment.TAG)
+        transaction.replace(R.id.fragment_container, movieFragment, MovieDisplayFragment.TAG)
+        transaction.addToBackStack(MovieDisplayFragment.TAG)
+        transaction.commit()
+    }
+
+    private fun displayTrendingMoviesList() {
+        // If trending movies list fragment already exists, use it, otherwise create a new instance
+        var trendingMoviesFragment: Fragment? = supportFragmentManager.findFragmentByTag(TrendingMoviesFragment.TAG)
+        if (trendingMoviesFragment == null) {
+            trendingMoviesFragment = TrendingMoviesFragment.newInstance()
+            (trendingMoviesFragment as TrendingMoviesFragment).setOnSearchListener(this)
+        }
+
+        // Swap the current fragment to the TrendingMoviesFragment
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.slide_in_down,
+            R.anim.slide_out_down,
+            R.anim.slide_in_up,
+            R.anim.slide_out_up
+        )
+        transaction.replace(R.id.fragment_container, trendingMoviesFragment, TrendingMoviesFragment.TAG)
         transaction.addToBackStack(TrendingMoviesFragment.TAG)
         transaction.commit()
     }

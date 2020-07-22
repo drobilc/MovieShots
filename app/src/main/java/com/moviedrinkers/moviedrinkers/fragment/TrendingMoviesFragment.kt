@@ -17,7 +17,14 @@ import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.fragment_popular_games.view.*
 
 
-class TrendingMoviesFragment : Fragment() {
+class TrendingMoviesFragment : Fragment(),
+    PopularMoviesDisplayAdapter.OnTrendingMovieClickListener {
+
+    private lateinit var callback: SearchFragment.OnSearch
+
+    fun setOnSearchListener(callback: SearchFragment.OnSearch) {
+        this.callback = callback
+    }
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PopularMoviesDisplayAdapter
@@ -27,6 +34,10 @@ class TrendingMoviesFragment : Fragment() {
 
     // Current list of games
     private val movies: ArrayList<TrendingMovie> = arrayListOf()
+
+    override fun onTrendingMovieClicked(movie: TrendingMovie) {
+        this.callback.onMovieSelected(movie)
+    }
 
     private fun refreshPopularGamesList(newItems: List<TrendingMovie>) {
         this.viewAdapter.addItems(newItems)
@@ -42,7 +53,7 @@ class TrendingMoviesFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_popular_games, container, false)
 
         this.viewManager = LinearLayoutManager(context)
-        this.viewAdapter = PopularMoviesDisplayAdapter(this.movies)
+        this.viewAdapter = PopularMoviesDisplayAdapter(this.movies, this)
 
         this.recyclerView = view.popular_games_list.apply {
             setHasFixedSize(false)
@@ -93,4 +104,5 @@ class TrendingMoviesFragment : Fragment() {
                 }
             }
     }
+
 }
