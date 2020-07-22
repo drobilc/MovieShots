@@ -1,7 +1,6 @@
 package com.moviedrinkers.moviedrinkers.network
 
 import android.content.Context
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 
@@ -14,6 +13,7 @@ class VolleySingleton constructor(context: Context) {
         const val MOVIE_SUGGESTIONS_TAG: String = "MOVIE_SUGGESTIONS"
         const val GAME_GENERATION_TAG: String = "GAME_GENERATION"
         const val GAME_RATING_TAG: String = "GAME_RATING"
+        const val POPULAR_GAMES_TAG: String = "POPULAR_GAMES"
 
         @Volatile
         private var INSTANCE: VolleySingleton? = null

@@ -90,6 +90,9 @@ class GameDisplayFragment : Fragment() {
     }
 
     companion object {
+
+        const val TAG: String = "GAME_DISPLAY_FRAGMENT"
+
         @JvmStatic
         fun newInstance() =
             GameDisplayFragment().apply {

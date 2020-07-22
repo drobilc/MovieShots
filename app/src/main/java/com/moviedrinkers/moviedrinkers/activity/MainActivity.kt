@@ -2,6 +2,7 @@ package com.moviedrinkers.moviedrinkers.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.android.volley.*
 import com.moviedrinkers.moviedrinkers.MovieShotsApplication
@@ -15,11 +16,11 @@ import com.moviedrinkers.moviedrinkers.fragment.PopularGamesFragment
 import com.moviedrinkers.moviedrinkers.fragment.SearchFragment
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 
+
 class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
 
     private lateinit var searchFragment: SearchFragment
     private lateinit var displayGameFragment: GameDisplayFragment
-    private lateinit var popularGamesFragment: PopularGamesFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +31,6 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         searchFragment.setOnSearchListener(this)
 
         displayGameFragment = GameDisplayFragment.newInstance()
-
-        popularGamesFragment = PopularGamesFragment.newInstance()
 
         // Add the search fragment to screen
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -45,6 +44,12 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
     }
 
     private fun displayPopularGamesList() {
+        // If popular games list fragment already exists, use it, otherwise create a new instance
+        var popularGamesFragment: Fragment? = supportFragmentManager.findFragmentByTag(PopularGamesFragment.TAG)
+        if (popularGamesFragment == null) {
+            popularGamesFragment = PopularGamesFragment.newInstance()
+        }
+
         // Swap the current fragment to the PopularGamesFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
@@ -53,8 +58,8 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
             R.anim.slide_in_up,
             R.anim.slide_out_up
         )
-        transaction.replace(R.id.fragment_container, popularGamesFragment)
-        transaction.addToBackStack(null)
+        transaction.replace(R.id.fragment_container, popularGamesFragment, PopularGamesFragment.TAG)
+        transaction.addToBackStack(PopularGamesFragment.TAG)
         transaction.commit()
     }
 

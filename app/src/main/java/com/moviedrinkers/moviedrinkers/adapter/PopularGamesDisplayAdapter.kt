@@ -9,13 +9,24 @@ import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_popular_game.view.*
 
-class PopularGamesDisplayAdapter(games: List<DrinkingGame>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PopularGamesDisplayAdapter(private val games: ArrayList<DrinkingGame>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     abstract class Item
     class Intro: Item()
     class GameDisplay(val index: Int, val game: DrinkingGame): Item()
 
     private var items: ArrayList<Item> = arrayListOf()
+
+    fun addItems(newItems: List<DrinkingGame>) {
+        val lastIndex = this.items.size
+
+        for ((index, game) in newItems.withIndex()) {
+            this.items.add(GameDisplay(lastIndex + index + 1, game))
+        }
+        this.games.addAll(newItems)
+
+        this.notifyItemRangeInserted(lastIndex, newItems.size)
+    }
 
     init {
         this.items.add(Intro())

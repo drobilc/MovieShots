@@ -7,31 +7,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Response
+import com.moviedrinkers.moviedrinkers.EndlessRecyclerViewScrollListener
+import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.adapter.PopularGamesDisplayAdapter
-import com.moviedrinkers.moviedrinkers.data.DrinkingCue
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
-import com.moviedrinkers.moviedrinkers.data.DrinkingGamePlayer
-import com.moviedrinkers.moviedrinkers.data.Movie
-import kotlinx.android.synthetic.main.fragment_popular_games.*
+import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.fragment_popular_games.view.*
 
 
 class PopularGamesFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewAdapter: PopularGamesDisplayAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
 
-    fun displayGames(view: View, games: List<DrinkingGame>) {
-        viewManager = LinearLayoutManager(context)
-        viewAdapter = PopularGamesDisplayAdapter(games)
+    private var scrollListener: EndlessRecyclerViewScrollListener? = null
 
-        recyclerView = view.popular_games_list.apply {
-            setHasFixedSize(false)
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
+    // Current list of games
+    private val games: ArrayList<DrinkingGame> = arrayListOf()
+
+    private fun refreshPopularGamesList(newItems: List<DrinkingGame>) {
+        this.viewAdapter.addItems(newItems)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,21 +41,51 @@ class PopularGamesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_popular_games, container, false)
 
-        val inception: Movie = Movie("test", "Inception", 2010, "1h 20min", "https://image.tmdb.org/t/p/w92/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg")
-        val cues: List<DrinkingCue> = arrayListOf<DrinkingCue>(
-            DrinkingCue("real", 8)
-        )
-        val player: DrinkingGamePlayer = DrinkingGamePlayer(cues)
+        this.viewManager = LinearLayoutManager(context)
+        this.viewAdapter = PopularGamesDisplayAdapter(this.games)
 
-        val game: DrinkingGame = DrinkingGame("game", inception, arrayListOf<DrinkingGamePlayer>(player), arrayListOf<DrinkingCue>())
+        this.recyclerView = view.popular_games_list.apply {
+            setHasFixedSize(false)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
-        val games = arrayListOf<DrinkingGame>(game, game, game)
-        displayGames(view, games)
+        scrollListener = object : EndlessRecyclerViewScrollListener(viewManager as LinearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                loadGames(page)
+            }
+        }
+
+        this.recyclerView.addOnScrollListener(scrollListener as EndlessRecyclerViewScrollListener)
 
         return view
     }
 
+    private fun loadGames(page: Int) {
+        val queue = VolleySingleton.getInstance(this.context!!.applicationContext).requestQueue
+
+        val api = (this.context!!.applicationContext as MovieShotsApplication).getApi()
+        val jsonRequest = api.getPopularGames(page, Response.Listener {
+
+            // Parse list of DrinkingGame objects
+            val newGames: ArrayList<DrinkingGame> = arrayListOf()
+            for (i in 0 until it.length()) {
+                val drinkingGameJson = it.getJSONObject(i)
+                newGames.add(DrinkingGame.fromJson(drinkingGameJson))
+            }
+
+            refreshPopularGamesList(newGames)
+
+        }, Response.ErrorListener {
+        })
+
+        queue.add(jsonRequest)
+    }
+
     companion object {
+
+        const val TAG: String = "POPULAR_GAMES_FRAGMENT"
+
         @JvmStatic
         fun newInstance() =
             PopularGamesFragment().apply {

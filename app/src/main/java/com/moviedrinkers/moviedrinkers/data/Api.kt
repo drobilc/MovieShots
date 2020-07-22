@@ -16,6 +16,7 @@ class Api(private val applicationKey: String) {
         private const val MAIN_URL = "https://movieshots.mladibori.si"
         private const val GENERATE_GAME_URL = "$MAIN_URL/game"
         private const val RATE_GAME_URL = "$GENERATE_GAME_URL/rate"
+        private const val POPULAR_GAMES_URL = "$GENERATE_GAME_URL/popular"
         private const val SUGGESTIONS_URL = "$MAIN_URL/suggestions"
     }
 
@@ -45,6 +46,14 @@ class Api(private val applicationKey: String) {
             .appendQueryParameter("rating", rating.toString())
             .build()
         return generatedRatingUrl.toString()
+    }
+
+    private fun getPopularGamesUrl(page: Int): String {
+        val generatedPopularGamesUrl = Uri.parse(POPULAR_GAMES_URL).buildUpon()
+            .appendQueryParameter("api_key", this.applicationKey)
+            .appendQueryParameter("page", page.toString())
+            .build()
+        return generatedPopularGamesUrl.toString()
     }
 
     private fun getSuggestionsUrl(keywords: String): String {
@@ -88,6 +97,13 @@ class Api(private val applicationKey: String) {
         val url = this.getRateGameUrl(gameId, rating)
         val jsonRequest = JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener)
         jsonRequest.tag = VolleySingleton.GAME_RATING_TAG
+        return jsonRequest
+    }
+
+    fun getPopularGames(page: Int, listener: Response.Listener<JSONArray>, errorListener: Response.ErrorListener): JsonArrayRequest {
+        val url = this.getPopularGamesUrl(page)
+        val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null, listener, errorListener)
+        jsonRequest.tag = VolleySingleton.POPULAR_GAMES_TAG
         return jsonRequest
     }
 

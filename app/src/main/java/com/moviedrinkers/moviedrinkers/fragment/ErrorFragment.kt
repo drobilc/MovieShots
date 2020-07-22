@@ -40,6 +40,9 @@ class ErrorFragment : Fragment() {
     }
 
     companion object {
+
+        const val TAG: String = "ERROR_FRAGMENT"
+
         @JvmStatic
         fun newInstance(exception: ApiException) =
             ErrorFragment().apply {

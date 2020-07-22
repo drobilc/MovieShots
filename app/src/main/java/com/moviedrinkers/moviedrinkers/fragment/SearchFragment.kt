@@ -161,6 +161,9 @@ class SearchFragment : Fragment() {
     }
 
     companion object {
+
+        const val TAG: String = "SEARCH_FRAGMENT"
+
         @JvmStatic
         fun newInstance() =
             SearchFragment().apply {
