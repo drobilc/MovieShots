@@ -1,45 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:paddingLeft="32dp"
-    android:paddingRight="32dp"
-    android:paddingBottom="24dp">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/movie_cover"
-        android:layout_width="48dp"
-        android:layout_height="72dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:layout_gravity="center_vertical"
-        android:background="@color/colorMovieCover"/>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:layout_gravity="center_vertical">
+        android:orientation="horizontal"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp">
 
-        <TextView
-            android:id="@+id/movie_title"
+        <ImageView
+            android:id="@+id/movie_cover"
+            android:layout_width="48dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:background="@color/colorMovieCover"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/movie_suggestion_default"
-            android:textSize="20sp"
-            android:fontFamily="@font/open_sans"/>
+            app:layout_constrainedWidth="true"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/movie_rating"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toEndOf="@+id/movie_cover"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="40"
+                android:fontFamily="@font/open_sans_semibold"
+                android:text="@string/movie_suggestion_default"
+                android:ellipsize="end"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/movie_number_of_ratings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/open_sans_light"
+                android:textSize="16sp"
+                android:text="@string/default_number_of_ratings"/>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/movie_year"
+            android:id="@+id/movie_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/movie_suggestion_year_default"
-            android:textSize="18sp"
-            android:fontFamily="@font/open_sans_light"/>
+            android:text="@string/default_rating"
+            android:fontFamily="@font/open_sans_bold"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorMovieCover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"/>
 
 </LinearLayout>

@@ -80,6 +80,13 @@
     <string name="hottest_games_title">Hottest Movies</string>
     <string name="people_have_spoken">The people have spoken</string>
     <string name="hottest_games_description">Below, you can see a list of most popular movies as rated by you and your fellow players. Stay awesome and keep rating!</string>
+    <string name="default_rating">4.7</string>
+    <string name="default_number_of_ratings">Rated: 100 times</string>
+
+    <plurals name="number_of_ratings">
+        <item quantity="one">Rated: %d time</item>
+        <item quantity="other">Rated: %d times</item>
+    </plurals>
 
 
 </resources>

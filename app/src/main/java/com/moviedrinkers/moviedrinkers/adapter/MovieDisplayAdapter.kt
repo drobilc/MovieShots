@@ -8,6 +8,7 @@ import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.list_item_movie_display_game.view.*
 import kotlinx.android.synthetic.main.list_item_movie_display_intro.view.*
 import kotlinx.android.synthetic.main.list_item_trending_movie.view.movie_cover
 import kotlinx.android.synthetic.main.list_item_trending_movie.view.movie_title
@@ -50,6 +51,8 @@ class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapte
 
         val movieCover = view.movie_cover
         val movieTitle = view.movie_title
+        val movieRating = view.movie_rating
+        val movieNumberOfRatings = view.movie_number_of_ratings
 
         fun bind(game: DrinkingGame) {
 
@@ -60,6 +63,10 @@ class MovieDisplayAdapter(private val movie: TrendingMovie): RecyclerView.Adapte
             }
 
             movieTitle.text = game.movie.title
+
+            movieRating.text = game.rating.toString()
+
+            movieNumberOfRatings.text = movieNumberOfRatings.context.resources.getQuantityString(R.plurals.number_of_ratings, game.numberOfReviews, game.numberOfReviews)
 
         }
     }
