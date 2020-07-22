@@ -17,15 +17,15 @@ import kotlinx.android.synthetic.main.list_item_game_display.view.*
 import kotlinx.android.synthetic.main.list_item_game_intro.view.*
 import kotlinx.android.synthetic.main.list_item_game_rating.view.*
 
-abstract class Item
-class Intro: Item()
-class PlayerCue(val position: Int, val player: DrinkingGamePlayer): Item()
-class BonusIntro: Item()
-class BonusCue(val position: Int, var drinkingCue: DrinkingCue): Item()
-class Spacer: Item()
-class GameRating(val game: DrinkingGame): Item()
-
 class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    abstract class Item
+    class Intro: Item()
+    class PlayerCue(val position: Int, val player: DrinkingGamePlayer): Item()
+    class BonusIntro: Item()
+    class BonusCue(val position: Int, var drinkingCue: DrinkingCue): Item()
+    class Spacer: Item()
+    class GameRating(val game: DrinkingGame): Item()
 
     private var items: ArrayList<Item> = arrayListOf()
 
