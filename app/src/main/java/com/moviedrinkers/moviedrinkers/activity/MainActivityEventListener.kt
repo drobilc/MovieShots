@@ -1,5 +1,6 @@
 package com.moviedrinkers.moviedrinkers.activity
 
+import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.Movie
 import com.moviedrinkers.moviedrinkers.data.TrendingMovie
@@ -20,4 +21,6 @@ interface MainActivityEventListener {
 
     // Callback for when user click "Retry" button in error fragment
     fun onRetryButtonClicked()
+
+    fun onException(exception: ApiException)
 }
