@@ -17,11 +17,25 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, 
 
     abstract class Item
     class Intro: Item()
+    class Loading: Item()
     class MovieDisplay(val index: Int, val movie: TrendingMovie): Item()
 
     private var items: ArrayList<Item> = arrayListOf()
+    private var loadingItem: Loading? = null
 
     fun addItems(newItems: List<TrendingMovie>) {
+        // When appending new items to this adapter, first check if there is loading indicator in
+        // the list. If there is, remove it and notify adapter that it has been removed.
+        if (loadingItem != null) {
+            val index = this.items.indexOf((loadingItem as Loading))
+            if (index != -1) {
+                this.items.removeAt(index)
+                loadingItem = null
+                this.notifyItemRemoved(index)
+            }
+        }
+
+        // After loading indicator has been removed, add new items to list.
         val lastIndex = this.items.size
 
         for ((index, movie) in newItems.withIndex()) {
@@ -34,11 +48,21 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, 
 
     init {
         this.items.add(Intro())
+
+        if (this.movies.size <= 0) {
+            loadingItem = Loading()
+            this.items.add(loadingItem as Loading)
+        }
+
         for ((index, movie) in movies.withIndex())
             this.items.add(MovieDisplay(index + 1, movie))
     }
 
     class IntroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bind() {}
+    }
+
+    class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind() {}
     }
 
@@ -79,6 +103,7 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, 
         return when (viewType) {
             TYPE_INTRO -> IntroViewHolder(inflater.inflate(R.layout.list_item_trending_movie_intro, parent, false))
             TYPE_MOVIE -> MovieViewHolder(inflater.inflate(R.layout.list_item_trending_movie, parent, false))
+            TYPE_LOADING -> LoadingViewHolder(inflater.inflate(R.layout.list_item_trending_movie_loading, parent, false))
             else -> MovieViewHolder(inflater.inflate(R.layout.list_item_trending_movie, parent, false))
         }
     }
@@ -89,6 +114,7 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, 
         when (getItemViewType(position)) {
             TYPE_INTRO -> (holder as IntroViewHolder).bind()
             TYPE_MOVIE -> (holder as MovieViewHolder).bind((item as MovieDisplay).movie, itemClickListener)
+            TYPE_LOADING -> (holder as LoadingViewHolder).bind()
         }
     }
 
@@ -98,12 +124,15 @@ class PopularMoviesDisplayAdapter(private val movies: ArrayList<TrendingMovie>, 
         val item = this.items[position]
         if (item is Intro)
             return TYPE_INTRO
+        if (item is Loading)
+            return TYPE_LOADING
         return TYPE_MOVIE
     }
 
     companion object {
         private const val TYPE_INTRO = 1
         private const val TYPE_MOVIE = 2
+        private const val TYPE_LOADING = 4
     }
 
 }

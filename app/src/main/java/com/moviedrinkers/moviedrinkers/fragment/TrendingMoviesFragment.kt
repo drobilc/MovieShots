@@ -43,8 +43,24 @@ class TrendingMoviesFragment : Fragment(),
         this.viewAdapter.addItems(newItems)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("movies", this.movies)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // If savedInstanceState is not null, the orientation probably changed.
+        // Load a list of movies from previous state and display it.
+        if (savedInstanceState != null) {
+            val previousMovies: ArrayList<TrendingMovie>? = savedInstanceState.getParcelableArrayList("movies")
+            if (previousMovies != null) {
+                movies.clear()
+                movies.addAll(previousMovies)
+            }
+        }
+
         arguments?.let {
         }
     }
