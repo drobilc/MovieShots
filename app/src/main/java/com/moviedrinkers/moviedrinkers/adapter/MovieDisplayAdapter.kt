@@ -36,6 +36,7 @@ class MovieDisplayAdapter(private val movie: TrendingMovie, val itemClickListene
         val movieCover = view.movie_cover
         val movieTitle = view.movie_title
         val movieOverview = view.movie_overview
+        val movieYear = view.movie_year
 
         fun bind(movie: TrendingMovie) {
 
@@ -47,6 +48,7 @@ class MovieDisplayAdapter(private val movie: TrendingMovie, val itemClickListene
 
             movieTitle.text = movie.title
             movieOverview.text = movie.overview
+            movieYear.text = movie.year.toString()
 
         }
     }

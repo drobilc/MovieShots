@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -19,13 +19,10 @@
             android:id="@+id/movie_cover"
             android:layout_width="48dp"
             android:layout_height="72dp"
-            android:layout_gravity="center_vertical"
             android:adjustViewBounds="true"
             android:background="@color/colorMovieCover"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_gravity="center_vertical"/>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -33,11 +30,7 @@
             android:layout_height="wrap_content"
             app:layout_constrainedWidth="true"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/movie_rating"
-            app:layout_constraintHorizontal_bias="0.2"
-            app:layout_constraintStart_toEndOf="@+id/movie_cover"
+            android:layout_weight="1"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
@@ -51,11 +44,40 @@
                 android:ellipsize="end"
                 android:textSize="20sp" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                android:id="@+id/movie_number_of_players"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:textSize="16sp"
+                android:text="12 players"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="16sp"
+                    android:text=", "/>
+
+                <TextView
+                    android:id="@+id/movie_number_of_shots"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans"
+                    android:textSize="16sp"
+                    android:text="8 shots"/>
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/movie_number_of_ratings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:fontFamily="@font/open_sans_light"
                 android:textSize="16sp"
                 android:text="@string/default_number_of_ratings"/>
@@ -69,11 +91,9 @@
             android:text="@string/default_rating"
             android:fontFamily="@font/open_sans_bold"
             android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center_vertical"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
