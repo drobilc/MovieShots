@@ -43,31 +43,10 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
     }
 
     override fun onMenuButtonClicked() {
-        displayTrendingMoviesList()
-    }
+        // When menu button is clicked in the search fragment, a list of trending movies should
+        // be displayed. The TrendingMoviesFragment is first created when activity is created
+        // and is then reused each time user clicks on the menu button.
 
-    override fun onMovieSelected(movie: TrendingMovie) {
-        displayMovieData(movie)
-    }
-
-    private fun displayMovieData(movie: TrendingMovie) {
-        val movieFragment: Fragment = MovieDisplayFragment.newInstance(movie)
-        (movieFragment as MovieDisplayFragment).setOnSearchListener(this)
-
-        // Swap the current fragment to the PopularGamesFragment
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(
-            R.anim.slide_in_down,
-            R.anim.slide_out_down,
-            R.anim.slide_in_up,
-            R.anim.slide_out_up
-        )
-        transaction.replace(R.id.fragment_container, movieFragment, MovieDisplayFragment.TAG)
-        transaction.addToBackStack(MovieDisplayFragment.TAG)
-        transaction.commit()
-    }
-
-    private fun displayTrendingMoviesList() {
         // Swap the current fragment to the TrendingMoviesFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
@@ -81,8 +60,28 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         transaction.commit()
     }
 
+    override fun onMovieSelected(movie: TrendingMovie) {
+        // When user clicks a movie from TrendingMoviesFragment, additional data about movie should
+        // be displayed. Here, a new MovieDisplayFragment is created from TrendingMovie object.
+        val movieFragment: Fragment = MovieDisplayFragment.newInstance(movie)
+        (movieFragment as MovieDisplayFragment).setOnSearchListener(this)
+
+        // Swap the current fragment to the PopularGamesFragment
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.slide_in_down,
+            R.anim.slide_out_down,
+            R.anim.slide_in_up,
+            R.anim.slide_out_up
+        )
+        transaction.replace(R.id.fragment_container, movieFragment, MovieDisplayFragment.TAG)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
     private fun displayExceptionFragment(exception: ApiException) {
-        // Swap the current fragment to the ExceptionFragment
+        // If the server returns an exception when generating game, the exception is displayed
+        // using the ErrorFragment.
         val exceptionFragment: ErrorFragment = ErrorFragment.newInstance(exception)
         exceptionFragment.setOnRetryListener(this)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -92,11 +91,14 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
             R.anim.fade_in,
             R.anim.fade_out
         )
-        transaction.replace(R.id.fragment_container, exceptionFragment)
+        transaction.replace(R.id.fragment_container, exceptionFragment, ErrorFragment.TAG)
         transaction.commit()
     }
 
     override fun displayGame(game: DrinkingGame) {
+        // When user clicks on a popular game inside the MovieDisplayFragment, a game must be
+        // displayed. A constructor GameDisplayFragment.newInstance(game) can be used to create
+        // a new GameDisplayFragment that will not load data but simply display game information.
         val displayGameFragment = GameDisplayFragment.newInstance(game)
         // Swap the current fragment to the GameDisplayFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
@@ -190,7 +192,8 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
     }
 
     override fun onRetryButtonClicked() {
-        // Swap the current fragment to the SearchFrgment
+        // When user clicks on "Retry" button in ErrorFragment, a SearchFragment should be displayed
+        // to allow user to try searching for new movie.
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
             R.anim.fade_in,
