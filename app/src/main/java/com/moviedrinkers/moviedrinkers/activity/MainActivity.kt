@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         transaction.commit()
     }
 
-    fun displayGame(gameId: String) {
+    private fun displayGame(gameId: String) {
         // If user clicks on a sharing link, a new game display fragment is created
         val displayGameFragment = GameDisplayFragment.fromGameId(gameId)
         displayGameFragment.setListener(this)
@@ -118,8 +118,7 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
             R.anim.slide_in_down,
             R.anim.slide_out_down
         )
-        transaction.replace(R.id.fragment_container, displayGameFragment, GameDisplayFragment.TAG)
-        transaction.addToBackStack(null)
+        transaction.add(R.id.fragment_container, displayGameFragment, GameDisplayFragment.TAG)
         transaction.commit()
     }
 
