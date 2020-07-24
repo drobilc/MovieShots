@@ -16,9 +16,17 @@ class Api(private val applicationKey: String) {
         private const val MAIN_URL = "https://movieshots.mladibori.si"
         private const val GENERATE_GAME_URL = "$MAIN_URL/game"
         private const val GET_GAME_DATA_URL = "$MAIN_URL/game/"
+        private const val GET_SHARE_GAME_URL = "$MAIN_URL/share/"
         private const val TRENDING_MOVIES_URL = "$MAIN_URL/movie/trending"
         private const val RATE_GAME_URL = "$GENERATE_GAME_URL/rate"
         private const val SUGGESTIONS_URL = "$MAIN_URL/suggestions"
+    }
+
+    fun getShareUrl(gameId: String): String {
+        val generatedSharingUrl = Uri.parse(GET_SHARE_GAME_URL).buildUpon()
+            .appendEncodedPath(gameId)
+            .build()
+        return generatedSharingUrl.toString()
     }
 
     private fun getGenerateGameUrl(

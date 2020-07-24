@@ -20,7 +20,7 @@ import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.fragment_game_display.*
 
 
-class GameDisplayFragment : Fragment() {
+class GameDisplayFragment : Fragment(), GameDisplayAdapter.OnShareClickListener {
 
     private val handler: Handler = Handler()
 
@@ -56,7 +56,7 @@ class GameDisplayFragment : Fragment() {
 
     private fun displayGame(game: DrinkingGame, animationOffset: Long = 0L) {
         val viewManager = LinearLayoutManager(context)
-        val viewAdapter = GameDisplayAdapter(game)
+        val viewAdapter = GameDisplayAdapter(game, this)
 
         val recyclerView = generated_game.apply {
             setHasFixedSize(true)
@@ -224,6 +224,10 @@ class GameDisplayFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onShareButtonClicked(game: DrinkingGame) {
+        this.callback.shareGame(game)
     }
 
 }

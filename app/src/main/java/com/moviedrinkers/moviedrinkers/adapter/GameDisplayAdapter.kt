@@ -13,11 +13,17 @@ import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.DrinkingGamePlayer
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.list_item_bonus_word.view.*
+import kotlinx.android.synthetic.main.list_item_bonus_word.view.word
 import kotlinx.android.synthetic.main.list_item_game_display.view.*
 import kotlinx.android.synthetic.main.list_item_game_intro.view.*
 import kotlinx.android.synthetic.main.list_item_game_rating.view.*
+import kotlinx.android.synthetic.main.list_item_share_game.view.*
 
-class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GameDisplayAdapter(private val game: DrinkingGame, val itemClickListener: OnShareClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface OnShareClickListener {
+        fun onShareButtonClicked(game: DrinkingGame)
+    }
 
     abstract class Item
     class Intro: Item()
@@ -26,6 +32,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
     class BonusCue(val position: Int, var drinkingCue: DrinkingCue): Item()
     class Spacer: Item()
     class GameRating(val game: DrinkingGame): Item()
+    class Share(val game: DrinkingGame): Item()
 
     private var items: ArrayList<Item> = arrayListOf()
 
@@ -40,9 +47,10 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
                 this.items.add(BonusCue(index, bonusWord))
         }
 
-        this.items.add(GameRating(game))
+        this.items.add(Share(game))
 
-        this.items.add(Spacer())
+        this.items.add(GameRating(game))
+        // this.items.add(Spacer())
     }
 
     class CueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -76,6 +84,16 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
 
             val players = game.players.size
             numberOfPlayers.text = itemView.context.resources.getQuantityString(R.plurals.players_number, players, players)
+        }
+    }
+
+    class ShareViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val shareButton = view.share_button
+
+        fun bind(game: DrinkingGame, clickListener: OnShareClickListener) {
+            shareButton.setOnClickListener {
+                clickListener.onShareButtonClicked(game)
+            }
         }
     }
 
@@ -141,6 +159,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             TYPE_BONUS_WORD -> BonusCueViewHolder(inflater.inflate(R.layout.list_item_bonus_word, parent, false))
             TYPE_SPACER -> SpacerViewHolder(inflater.inflate(R.layout.list_item_spacer, parent, false))
             TYPE_RATE_GAME -> GameRatingViewHolder(inflater.inflate(R.layout.list_item_game_rating, parent, false))
+            TYPE_SHARE_GAME -> ShareViewHolder(inflater.inflate(R.layout.list_item_share_game, parent, false))
             else -> CueViewHolder(inflater.inflate(R.layout.list_item_game_display, parent, false))
         }
     }
@@ -155,6 +174,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             TYPE_BONUS_WORD -> (holder as BonusCueViewHolder).bind((item as BonusCue), game.bonusWords.size)
             TYPE_SPACER -> (holder as SpacerViewHolder).bind()
             TYPE_RATE_GAME -> (holder as GameRatingViewHolder).bind(game)
+            TYPE_SHARE_GAME -> (holder as ShareViewHolder).bind(game, itemClickListener)
         }
     }
 
@@ -172,6 +192,8 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
             return TYPE_BONUS_WORD
         if (item is GameRating)
             return TYPE_RATE_GAME
+        if (item is Share)
+            return TYPE_SHARE_GAME
         return TYPE_SPACER
     }
 
@@ -182,6 +204,7 @@ class GameDisplayAdapter(private val game: DrinkingGame): RecyclerView.Adapter<R
         private const val TYPE_BONUS_WORD = 8
         private const val TYPE_SPACER = 16
         private const val TYPE_RATE_GAME = 32
+        private const val TYPE_SHARE_GAME = 64
     }
 
 }

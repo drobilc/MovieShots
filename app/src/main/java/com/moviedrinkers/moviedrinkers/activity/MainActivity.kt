@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
@@ -50,6 +51,18 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         val intentUrl: Uri? = intent.data
         val gameId = intentUrl!!.lastPathSegment
         this.displayGame(gameId)
+    }
+
+    override fun shareGame(game: DrinkingGame) {
+        val api = (applicationContext as MovieShotsApplication).getApi()
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, api.getShareUrl(game.id))
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     override fun onMenuButtonClicked() {

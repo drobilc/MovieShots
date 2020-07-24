@@ -23,4 +23,6 @@ interface MainActivityEventListener {
     fun onRetryButtonClicked()
 
     fun onException(exception: ApiException)
+
+    fun shareGame(game: DrinkingGame)
 }
