@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
     }
 
     private fun handleIntent(intent: Intent) {
-        val intentUrl: Uri = intent.data
-        val gameId = intentUrl.lastPathSegment
+        val intentUrl: Uri? = intent.data
+        val gameId = intentUrl!!.lastPathSegment
         this.displayGame(gameId)
     }
 
