@@ -1,11 +1,12 @@
 package com.moviedrinkers.moviedrinkers.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.activity.MainActivityEventListener
 import com.moviedrinkers.moviedrinkers.data.ApiException
 import kotlinx.android.synthetic.main.fragment_error.view.*
 
@@ -13,8 +14,8 @@ class ErrorFragment : Fragment() {
 
     private var exception: ApiException? = null
 
-    private lateinit var callback: SearchFragment.OnSearch
-    fun setOnRetryListener(callback: SearchFragment.OnSearch) {
+    private lateinit var callback: MainActivityEventListener
+    fun setOnRetryListener(callback: MainActivityEventListener) {
         this.callback = callback
     }
 
@@ -33,7 +34,7 @@ class ErrorFragment : Fragment() {
         view.exception_message.text = exception?.message
 
         view.try_again_button.setOnClickListener {
-            this.callback.onRetry()
+            this.callback.onRetryButtonClicked()
         }
 
         return view

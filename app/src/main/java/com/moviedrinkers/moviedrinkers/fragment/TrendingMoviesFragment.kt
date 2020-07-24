@@ -11,6 +11,7 @@ import com.android.volley.Response
 import com.moviedrinkers.moviedrinkers.EndlessRecyclerViewScrollListener
 import com.moviedrinkers.moviedrinkers.MovieShotsApplication
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.activity.MainActivityEventListener
 import com.moviedrinkers.moviedrinkers.adapter.PopularMoviesDisplayAdapter
 import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
@@ -20,9 +21,9 @@ import kotlinx.android.synthetic.main.fragment_popular_games.view.*
 class TrendingMoviesFragment : Fragment(),
     PopularMoviesDisplayAdapter.OnTrendingMovieClickListener {
 
-    private lateinit var callback: SearchFragment.OnSearch
+    private lateinit var callback: MainActivityEventListener
 
-    fun setOnSearchListener(callback: SearchFragment.OnSearch) {
+    fun setOnSearchListener(callback: MainActivityEventListener) {
         this.callback = callback
     }
 

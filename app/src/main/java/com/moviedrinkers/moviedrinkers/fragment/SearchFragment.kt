@@ -12,27 +12,18 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import com.jem.rubberpicker.RubberSeekBar
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.activity.MainActivityEventListener
 import com.moviedrinkers.moviedrinkers.adapter.MovieSuggestionsAdapter
-import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.Movie
-import com.moviedrinkers.moviedrinkers.data.TrendingMovie
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
 
 
 class SearchFragment : Fragment() {
 
-    interface OnSearch {
-        fun onGameSearched(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int)
-        fun onMenuButtonClicked()
-        fun onMovieSelected(movie: TrendingMovie)
-        fun displayGame(game: DrinkingGame)
-        fun onRetry()
-    }
+    private lateinit var callback: MainActivityEventListener
 
-    private lateinit var callback: OnSearch
-
-    fun setOnSearchListener(callback: OnSearch) {
+    fun setOnSearchListener(callback: MainActivityEventListener) {
         this.callback = callback
     }
 

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.moviedrinkers.moviedrinkers.R
+import com.moviedrinkers.moviedrinkers.activity.MainActivityEventListener
 import com.moviedrinkers.moviedrinkers.adapter.MovieDisplayAdapter
 import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.TrendingMovie
@@ -16,9 +17,9 @@ class MovieDisplayFragment : Fragment(), MovieDisplayAdapter.OnGameClickListener
 
     private var movie: TrendingMovie? = null
 
-    private lateinit var callback: SearchFragment.OnSearch
+    private lateinit var callback: MainActivityEventListener
 
-    fun setOnSearchListener(callback: SearchFragment.OnSearch) {
+    fun setOnSearchListener(callback: MainActivityEventListener) {
         this.callback = callback
     }
 

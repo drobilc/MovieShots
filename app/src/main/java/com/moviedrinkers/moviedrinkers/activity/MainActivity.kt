@@ -15,26 +15,31 @@ import com.moviedrinkers.moviedrinkers.fragment.*
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 
 
-class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
+class MainActivity : AppCompatActivity(), MainActivityEventListener {
 
     private lateinit var searchFragment: SearchFragment
-    private lateinit var displayGameFragment: GameDisplayFragment
+    private lateinit var trendingMoviesFragment: TrendingMoviesFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Create both fragments, pass the on search listener to search fragment
+        // If savedInstanceState is not null, the activity has been loaded from memory
+        // (this mostly happens when user rotates the screen)
+        if (savedInstanceState != null)
+            return
+
+        // Create new search and trending movies fragment so the data is persisted
         searchFragment = SearchFragment.newInstance()
         searchFragment.setOnSearchListener(this)
 
-        displayGameFragment = GameDisplayFragment.newInstance()
+        trendingMoviesFragment = TrendingMoviesFragment.newInstance()
+        trendingMoviesFragment.setOnSearchListener(this)
 
-        // Add the search fragment to screen
+        // Add SearchFragment as the first screen the user sees
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, searchFragment)
         transaction.commit()
-
     }
 
     override fun onMenuButtonClicked() {
@@ -63,13 +68,6 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
     }
 
     private fun displayTrendingMoviesList() {
-        // If trending movies list fragment already exists, use it, otherwise create a new instance
-        var trendingMoviesFragment: Fragment? = supportFragmentManager.findFragmentByTag(TrendingMoviesFragment.TAG)
-        if (trendingMoviesFragment == null) {
-            trendingMoviesFragment = TrendingMoviesFragment.newInstance()
-            (trendingMoviesFragment as TrendingMoviesFragment).setOnSearchListener(this)
-        }
-
         // Swap the current fragment to the TrendingMoviesFragment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
@@ -79,16 +77,13 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
             R.anim.slide_out_up
         )
         transaction.replace(R.id.fragment_container, trendingMoviesFragment, TrendingMoviesFragment.TAG)
-        transaction.addToBackStack(TrendingMoviesFragment.TAG)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
     private fun displayExceptionFragment(exception: ApiException) {
         // Swap the current fragment to the ExceptionFragment
-        val exceptionFragment: ErrorFragment =
-            ErrorFragment.newInstance(
-                exception
-            )
+        val exceptionFragment: ErrorFragment = ErrorFragment.newInstance(exception)
         exceptionFragment.setOnRetryListener(this)
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
@@ -194,7 +189,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         transaction.commit()
     }
 
-    override fun onRetry() {
+    override fun onRetryButtonClicked() {
         // Swap the current fragment to the SearchFrgment
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
@@ -206,5 +201,4 @@ class MainActivity : AppCompatActivity(), SearchFragment.OnSearch {
         transaction.replace(R.id.fragment_container, searchFragment)
         transaction.commit()
     }
-
 }
