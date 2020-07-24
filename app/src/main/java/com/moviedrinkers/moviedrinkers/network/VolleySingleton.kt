@@ -14,6 +14,7 @@ class VolleySingleton constructor(context: Context) {
         const val GAME_GENERATION_TAG: String = "GAME_GENERATION"
         const val GAME_RATING_TAG: String = "GAME_RATING"
         const val TRENDING_MOVIES_TAG: String = "POPULAR_GAMES"
+        const val GAME_DATA_TAG: String = "GAME_DATA"
 
         @Volatile
         private var INSTANCE: VolleySingleton? = null

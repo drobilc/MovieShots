@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
             R.anim.slide_in_down,
             R.anim.slide_out_down
         )
-        transaction.replace(R.id.fragment_container, displayGameFragment)
+        transaction.replace(R.id.fragment_container, displayGameFragment, GameDisplayFragment.TAG)
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -145,7 +145,7 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
             R.anim.fade_out,
             R.anim.fade_in
         )
-        transaction.replace(R.id.fragment_container, searchFragment)
+        transaction.replace(R.id.fragment_container, searchFragment, SearchFragment.TAG)
         transaction.commit()
     }
 }

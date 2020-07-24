@@ -2,7 +2,6 @@ package com.moviedrinkers.moviedrinkers.fragment
 
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,8 +78,38 @@ class GameDisplayFragment : Fragment() {
     }
 
     private fun loadGameById(gameId: String) {
-        Log.v("MovieShots", "Loading game by id: " + gameId)
+        this.displayLoadingScreen(true)
 
+        val applicationContext = context!!.applicationContext
+
+        val queue = VolleySingleton.getInstance(applicationContext).requestQueue
+        val api = (applicationContext as MovieShotsApplication).getApi()
+
+        val jsonRequest = api.getGame(gameId, Response.Listener {
+            if (it.has("error")) {
+                val exception = ApiException.fromJson(it)
+                displayExceptionFragment(exception)
+            } else {
+                // Construct a new drinking game object from received JSON
+                val game: DrinkingGame = DrinkingGame.fromJson(it)
+
+                // Notify the fragment that the game has been generated, so it gets displayed
+                this.displayLoadingScreen(false)
+                this.displayGame(game)
+            }
+        }, Response.ErrorListener {
+            val exception = when (it) {
+                is NoConnectionError -> ApiException(getString(R.string.exception_no_connection), -1)
+                is NetworkError -> ApiException(getString(R.string.exception_network), -1)
+                is ParseError -> ApiException(getString(R.string.exception_parse), -1)
+                is ServerError -> ApiException(getString(R.string.exception_server), -1)
+                is TimeoutError -> ApiException(getString(R.string.exception_timeout), -1)
+                is AuthFailureError -> ApiException(getString(R.string.exception_authentication), -1)
+                else -> ApiException(getString(R.string.exception_default_message), -1)
+            }
+            displayExceptionFragment(exception)
+        })
+        queue.add(jsonRequest)
     }
 
     private fun loadGameByMovie(selectedMovie: Movie?, movieTitle: String, numberOfShots: Int, numberOfPlayers: Int) {
@@ -119,7 +148,7 @@ class GameDisplayFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return  inflater.inflate(R.layout.fragment_game_display, container, false)
+        return inflater.inflate(R.layout.fragment_game_display, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

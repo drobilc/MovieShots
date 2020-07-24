@@ -15,6 +15,7 @@ class Api(private val applicationKey: String) {
     companion object {
         private const val MAIN_URL = "https://movieshots.mladibori.si"
         private const val GENERATE_GAME_URL = "$MAIN_URL/game"
+        private const val GET_GAME_DATA_URL = "$MAIN_URL/game/"
         private const val TRENDING_MOVIES_URL = "$MAIN_URL/movie/trending"
         private const val RATE_GAME_URL = "$GENERATE_GAME_URL/rate"
         private const val SUGGESTIONS_URL = "$MAIN_URL/suggestions"
@@ -64,6 +65,14 @@ class Api(private val applicationKey: String) {
         return generatedSuggestionsUrl.toString()
     }
 
+    private fun getGameDataUrl(gameId: String): String {
+        val generatedGameDataUrl = Uri.parse(GET_GAME_DATA_URL).buildUpon()
+            .appendEncodedPath(gameId)
+            .appendQueryParameter("api_key", this.applicationKey)
+            .build()
+        return generatedGameDataUrl.toString()
+    }
+
     fun generateGame(
         selectedMovie: Movie?,
         movieTitle: String,
@@ -104,6 +113,16 @@ class Api(private val applicationKey: String) {
         val url = this.getTrendingMoviesUrl(page)
         val jsonRequest = JsonArrayRequest(Request.Method.GET, url, null, listener, errorListener)
         jsonRequest.tag = VolleySingleton.TRENDING_MOVIES_TAG
+        return jsonRequest
+    }
+
+    fun getGame(gameId: String, listener: Response.Listener<JSONObject>, errorListener: Response.ErrorListener): JsonObjectRequest {
+        val url = this.getGameDataUrl(gameId)
+        val jsonRequest =
+            JsonObjectRequest(Request.Method.GET, url, null, listener, errorListener)
+        jsonRequest.tag = VolleySingleton.GAME_DATA_TAG
+        jsonRequest.retryPolicy =
+            DefaultRetryPolicy(20000, 5, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         return jsonRequest
     }
 
