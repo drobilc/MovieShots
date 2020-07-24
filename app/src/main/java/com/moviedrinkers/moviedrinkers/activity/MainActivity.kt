@@ -1,5 +1,7 @@
 package com.moviedrinkers.moviedrinkers.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -21,6 +23,11 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Handle link sharing intent
+        if (intent != null && intent.data != null) {
+            return handleIntent(intent)
+        }
+
         // If savedInstanceState is not null, the activity has been loaded from memory
         // (this mostly happens when user rotates the screen)
         if (savedInstanceState != null)
@@ -37,6 +44,12 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, searchFragment)
         transaction.commit()
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val intentUrl: Uri = intent.data
+        val gameId = intentUrl.lastPathSegment
+        this.displayGame(gameId)
     }
 
     override fun onMenuButtonClicked() {
@@ -90,6 +103,23 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
             R.anim.fade_out
         )
         transaction.replace(R.id.fragment_container, exceptionFragment, ErrorFragment.TAG)
+        transaction.commit()
+    }
+
+    fun displayGame(gameId: String) {
+        // If user clicks on a sharing link, a new game display fragment is created
+        val displayGameFragment = GameDisplayFragment.fromGameId(gameId)
+        displayGameFragment.setListener(this)
+        // Swap the current fragment to the GameDisplayFragment
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.slide_in_up,
+            R.anim.slide_out_up,
+            R.anim.slide_in_down,
+            R.anim.slide_out_down
+        )
+        transaction.replace(R.id.fragment_container, displayGameFragment, GameDisplayFragment.TAG)
+        transaction.addToBackStack(null)
         transaction.commit()
     }
 
