@@ -1,6 +1,7 @@
 package com.moviedrinkers.moviedrinkers.activity
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -24,15 +25,12 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+
         // Handle link sharing intent
         if (intent != null && intent.data != null) {
             return handleIntent(intent)
         }
-
-        // If savedInstanceState is not null, the activity has been loaded from memory
-        // (this mostly happens when user rotates the screen)
-        if (savedInstanceState != null)
-            return
 
         // Create new search and trending movies fragment so the data is persisted
         searchFragment = SearchFragment.newInstance()
@@ -41,16 +39,18 @@ class MainActivity : AppCompatActivity(), MainActivityEventListener {
         trendingMoviesFragment = TrendingMoviesFragment.newInstance()
         trendingMoviesFragment.setOnSearchListener(this)
 
-        // Add SearchFragment as the first screen the user sees
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, searchFragment)
-        transaction.commit()
+        // Add SearchFragment as the first screen the user sees (if there is nothing else yet)
+        if (supportFragmentManager.backStackEntryCount <= 0) {
+            val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            transaction.add(R.id.fragment_container, searchFragment)
+            transaction.commit()
+        }
     }
 
     private fun handleIntent(intent: Intent) {
         val intentUrl: Uri? = intent.data
         val gameId = intentUrl!!.lastPathSegment
-        this.displayGame(gameId)
+        this.displayGame(gameId!!)
     }
 
     override fun shareGame(game: DrinkingGame) {
