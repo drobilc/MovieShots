@@ -27,6 +27,7 @@ class TrendingMoviesFragment : Fragment(),
         this.callback = callback
     }
 
+    private var currentPage: Int = 1
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: PopularMoviesDisplayAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
@@ -80,7 +81,7 @@ class TrendingMoviesFragment : Fragment(),
 
         scrollListener = object : EndlessRecyclerViewScrollListener(viewManager as LinearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                loadGames(page)
+                loadGames(currentPage)
             }
         }
 
@@ -104,7 +105,10 @@ class TrendingMoviesFragment : Fragment(),
 
             refreshPopularGamesList(newMovies)
 
+            currentPage += 1
+
         }, Response.ErrorListener {
+            currentPage += 1
         })
 
         queue.add(jsonRequest)
