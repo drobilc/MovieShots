@@ -13,6 +13,18 @@ data class DrinkingGame(
     val rating: Double,
     val numberOfReviews: Int
 ): Parcelable {
+
+    fun numberOfShots(): Int {
+        if (this.players.isEmpty())
+            return 0
+
+        var totalNumberOfShots = 0
+        for (player: DrinkingGamePlayer in this.players) {
+            totalNumberOfShots += player.getTotalOccurrences()
+        }
+        return (totalNumberOfShots / this.players.size).toInt()
+    }
+
     companion object {
 
         fun fromJson(jsonObject: JSONObject, movie: Movie): DrinkingGame {

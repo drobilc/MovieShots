@@ -59,6 +59,8 @@ class MovieDisplayAdapter(private val movie: TrendingMovie, val itemClickListene
         val movieTitle = view.movie_title
         val movieRating = view.movie_rating
         val movieNumberOfRatings = view.movie_number_of_ratings
+        val movieNumberOfPlayers = view.movie_number_of_players
+        val movieNumberOfShots = view.movie_number_of_shots
         val fullView = view
 
         fun bind(game: DrinkingGame, clickListener: OnGameClickListener) {
@@ -72,6 +74,12 @@ class MovieDisplayAdapter(private val movie: TrendingMovie, val itemClickListene
             movieTitle.text = game.movie.title
 
             movieRating.text = game.rating.toString()
+
+            val numberOfPlayers: Int = game.players.size
+            movieNumberOfPlayers.text = movieNumberOfPlayers.context.resources.getQuantityString(R.plurals.players_number, numberOfPlayers, numberOfPlayers)
+
+            val numberOfShots = game.numberOfShots()
+            movieNumberOfShots.text = movieNumberOfShots.context.resources.getQuantityString(R.plurals.intoxication_level_shots, numberOfShots, numberOfShots)
 
             movieNumberOfRatings.text = movieNumberOfRatings.context.resources.getQuantityString(R.plurals.number_of_ratings, game.numberOfReviews, game.numberOfReviews)
 

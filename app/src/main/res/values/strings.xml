@@ -6,9 +6,13 @@
 
     <string name="intoxication_level_title">Intoxication</string>
     <string name="intoxication_level_default_value">Chatty</string>
-    <plurals name="intoxication_level_shots">
+    <plurals name="intoxication_level_shots_brackets">
         <item quantity="one">(%d shot)</item>
         <item quantity="other">(%d shots)</item>
+    </plurals>
+    <plurals name="intoxication_level_shots">
+        <item quantity="one">%d shot</item>
+        <item quantity="other">%d shots</item>
     </plurals>
     <string name="intoxication_chatty">Chatty</string>
     <string name="intoxication_tipsy">Tipsy</string>

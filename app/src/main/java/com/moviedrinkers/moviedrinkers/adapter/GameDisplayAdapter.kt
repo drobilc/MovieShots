@@ -13,7 +13,6 @@ import com.moviedrinkers.moviedrinkers.data.DrinkingGame
 import com.moviedrinkers.moviedrinkers.data.DrinkingGamePlayer
 import com.moviedrinkers.moviedrinkers.network.VolleySingleton
 import kotlinx.android.synthetic.main.list_item_bonus_word.view.*
-import kotlinx.android.synthetic.main.list_item_bonus_word.view.word
 import kotlinx.android.synthetic.main.list_item_game_display.view.*
 import kotlinx.android.synthetic.main.list_item_game_intro.view.*
 import kotlinx.android.synthetic.main.list_item_game_rating.view.*
@@ -64,7 +63,7 @@ class GameDisplayAdapter(private val game: DrinkingGame, val itemClickListener: 
             player.text = itemView.context.getString(R.string.player_number, position)
 
             val occurrences = drinkingGamePlayer.getTotalOccurrences()
-            intoxication.text = itemView.context.resources.getQuantityString(R.plurals.intoxication_level_shots, occurrences, occurrences)
+            intoxication.text = itemView.context.resources.getQuantityString(R.plurals.intoxication_level_shots_brackets, occurrences, occurrences)
 
             val hue = position * (360.0f / itemCount)
             val stripColor = Color.HSVToColor(floatArrayOf(hue, 0.6f, 1.0f))

@@ -65,7 +65,7 @@ class SearchFragment : Fragment() {
     }
 
     fun refreshSliders() {
-        val numberOfShotsText = resources.getQuantityString(R.plurals.intoxication_level_shots, currentIntoxicationLevel, currentIntoxicationLevel)
+        val numberOfShotsText = resources.getQuantityString(R.plurals.intoxication_level_shots_brackets, currentIntoxicationLevel, currentIntoxicationLevel)
         intoxication_level?.text = getIntoxicationLevelText(currentIntoxicationLevel)
         number_of_shots?.text = numberOfShotsText
 
