@@ -83,11 +83,11 @@
     <string name="rating_default">No rating yet</string>
     <string name="hottest_games_title">Hottest Movies</string>
     <string name="people_have_spoken">The people have spoken</string>
-    <string name="hottest_games_description">Below, you can see a list of most popular movies as rated by you and your fellow players. Stay awesome and keep rating!</string>
+    <string name="hottest_games_description">Below, you can see a list of the most popular movies as rated by you and your fellow players. Stay awesome and keep rating!</string>
     <string name="default_rating">4.7</string>
     <string name="default_number_of_ratings">Rated: 100 times</string>
     <string name="share_title">Share with your friends</string>
-    <string name="share_text">Do you like this game? Share it with your friends and start drinking!</string>
+    <string name="share_text">The more, the merrier! Share this game with your friends so they can join you wherever they are.</string>
     <string name="share_game_button">Share game</string>
 
     <plurals name="number_of_ratings">
