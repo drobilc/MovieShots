@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <intent-filter>
+            <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -30,7 +30,7 @@
 
                 <data
                     android:scheme="https"
-                    android:host="movieshots.mladibori.si"
+                    android:host="movieshots.stvari.si"
                     android:pathPattern="/share/.*" />
             </intent-filter>
 
