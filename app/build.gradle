@@ -30,6 +30,16 @@ android {
         }
     }
 
+    // Because our project uses OkHttp and Retrofit library, Java 8 support must be enabled
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
 }
 
 dependencies {
