@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     buildTypes {
         release {
@@ -15,8 +15,8 @@ android {
 
     defaultConfig {
         applicationId "com.movieshots.movieshots"
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 3
         versionName "1.11"
 
@@ -35,17 +35,24 @@ android {
 dependencies {
     implementation 'com.github.Chrisvin:RubberPicker:v1.4'
 
-    // Internet operations: Volley is used for communication with API and Picasso is used to load images
+    // Currently, Volley library is used to communicate with REST API, but the project will be
+    // migrated to retrofit library in the future, so both libraries are added as requirements
     implementation 'com.android.volley:volley:1.1.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // The Picasso library is used to download movie images from the internet
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
