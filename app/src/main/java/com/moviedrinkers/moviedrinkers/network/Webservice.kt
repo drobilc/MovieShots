@@ -12,14 +12,14 @@ interface Webservice {
     @GET("/game/generate")
     fun generateGameByMovieId(
         @Query("movie_id") movieId: String,
-        @Query("intoxication") numberOfShots: Integer,
+        @Query("intoxication") numberOfShots: Int,
         @Query("players") numberOfPlayers: Int
     ): Call<DrinkingGame>
 
     @GET("/game/generate")
     fun generateGameByMovieTitle(
         @Query("movie") movieTitle: String,
-        @Query("intoxication") numberOfShots: Integer,
+        @Query("intoxication") numberOfShots: Int,
         @Query("players") numberOfPlayers: Int
     ): Call<DrinkingGame>
 
