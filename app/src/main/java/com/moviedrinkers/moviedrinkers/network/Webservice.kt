@@ -24,7 +24,7 @@ interface Webservice {
     ): Call<DrinkingGame>
 
     @GET("/movies/{movie}")
-    fun getUser(@Path("movie") movieId: String): Call<Movie>
+    fun getMovie(@Path("movie") movieId: String): Call<Movie>
 
     @GET("/game/{game}")
     fun getGame(@Path("game") gameId: String): Call<DrinkingGame>
@@ -34,6 +34,5 @@ interface Webservice {
 
     @GET("/movies/trending")
     fun trendingMovies(@Query("page") page: Int): Call<List<Movie>>
-
 
 }
